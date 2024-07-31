@@ -3,4 +3,6 @@
 Files in this resipository were used when learning to use Git
 
 Working with emergency fixes
+Playing with Conflict Merging
+
 

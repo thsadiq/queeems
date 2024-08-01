@@ -6,4 +6,7 @@ Working with emergency fixes
 Playing with Conflict Merging
 
 ## Is this a subsection?
-Jusst checking!
+Just checking!
+
+## Need to assess the utility of "pull" command
+Hello there!

@@ -1,3 +1,0 @@
-
-Just wanted to assess the magic of git
-

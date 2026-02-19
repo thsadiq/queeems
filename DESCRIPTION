@@ -1,0 +1,33 @@
+Package: queeems
+Version: 0.99.0
+Date: 2025-06-30
+License: GPL (>= 2)
+Authors@R: c(person("Hassan", "Sadiq", role=c("aut","cre","cph"),
+                    email="hassan.t.sadiq@gmail.com",
+                    comment=c(ORCID="0000-0003-0192-7134")))
+Title: Quantify the Extent of Evolutionary Evidence in Molecular Sequences
+Description: Biological inferences obtained from molecular data are only as
+    good as the extent of evolutionary signatures retained in the genetic
+    data. Techniques available to quantify these signatures are largely
+    targeted towards phylogeny reconstruction and they often rely on adhoc
+    hypothesis tests of significance. Here I present primarily Bayesian
+    functions for assess whether a set of protein sequences are saturated.
+    That is, to determine whether the evolutionary information in the
+    sequences has eroded with time. Site specific Bayes factors are
+    generated with respect to DNA, codon and amino acids to allow for
+    straightforward applications in extensive computational biology
+    inquiries, including natural selection analyses.
+Depends: R (>= 4.4), gtools, Matrix, Biostrings
+Imports: methods
+Suggests: BiocManager, BiocStyle, bookdown, htmltools, knitr,
+          testthat (>= 3.0.0), vegan, yaml
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+biocViews: Alignment, Classification, ComparativeGenomics, DataImport,
+           Genetics, MathematicalBiology, ResearchField, Sequencing,
+           SequenceMatching, Software, StatisticalMethod, WorkflowStep
+Contact: <hassan.t.sadiq@gmail.com>
+URL: https://github.com/thsadiq/queeems
+BugReports: https://github.com/thsadiq/queeems/issues
+Packaged: 2025-12-31 23:59:59 UTC; hassan
+Repository: Bioconductor

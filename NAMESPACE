@@ -1,0 +1,26 @@
+import(stats)
+import(Matrix)
+importFrom("methods", "is", "new")
+importFrom("Biostrings", "DNAStringSet")
+
+exportClasses(
+    baseSummary,
+    citing,
+    cncsframe,
+    siteindices
+)
+
+export(
+    aboutQueeems,
+    baseFrequency,
+    bstringCodons,
+    CnCs,
+    codonDissimilarity,
+    diffNucBinary,
+    nonSynonymous,
+    queeemsExtdata
+)
+
+exportMethods(
+)
+

@@ -1,0 +1,141 @@
+---
+title: "Quantify the Extent of Evolutionary Evidence in Molecular Sequences"
+author:
+- name: Hassan Sadiq
+  affiliation: Department of Statistics and Actuarial Science,
+    Stellenbosch University, South Africa
+output:
+    BiocStyle::html_document:
+        toc_float: true
+package: queeems
+bibliography: citation.bib
+abstract: |
+    Sewall Wright aaa
+vignette: |
+    %\VignetteIndexEntry{queeems Tutorial}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r style, echo = FALSE, results = 'asis'}
+    BiocStyle::markdown()
+```
+
+# Introduction
+Accuracy of inferences from analyses of molecular data, as with every other
+statistical investigation, depends on the data quality. Assessing the
+quality of molecular sequences for biological studies requires quantifying
+the degree of evolutionary signature retained in the data. Such an assessment
+is popularly done using a saturation (H) index that is inspired by information
+entropy. A single H index is estimated for an alignment of protein sequences
+and the significance of the evolutionary information retained is assessed
+with the Student's t hypothesis test. The H index is an invaluable
+contribution to computational evolutionary biology studies. Like many other
+existing measures of genetic data quality, the H index is most suited for
+phylogeny reconstruction inquiries.
+
+
+# Installation
+Use the following code to install `queeems` from the Bioconductor platform.
+```{r, eval=FALSE}
+if(!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("queeems")
+```
+The developmental version of the package that contains the most recent
+updates, is available under the `devel` tab of the Bioconductor platform.
+
+# Sample Code
+Three primary evolutionary algorithms .... Example of `R`
+[@cran2024] ... package.
+
+## Ornstein-Uhlenbeck Sensitivity
+```{r, eval=TRUE}
+# Make package accessible in R session
+library(scoup)
+
+# Number of extant taxa
+leaves <- 8
+
+# Number of codon sites
+sSize <- 15
+
+# Number of data replications for each parameter combination
+sims <- 1
+
+# OU reversion parameter (Theta) value
+eThta <- c(0.01)
+
+# OU asymptotic variance value
+eVary <- c(0.0001)
+
+# OU landscape shift parameters
+hbrunoStat <- hbInput(c(vNvS=1, nsynVar=0.01))
+
+# Sequence alignment size information
+seqStat <- seqDetails(c(nsite=sSize, ntaxa=leaves))
+
+# Iterate over all listed OU variance values
+for(g in seq(1,length(eVary))){
+
+    # Iterate over all listed OU reversion parameter values
+    for(h in seq(1,length(eThta))){
+
+        # Create appropriate simulation function ("ou") object
+        adaptStat <- ouInput(c(eVar=eVary[g],Theta=eThta[h]))
+
+        # Iterate over the specified number of replicates
+        for(i in seq(1,sims)){
+
+            # Execute simulation
+            simData <- alignsim(adaptStat, seqStat, hbrunoStat, NULL)
+        }
+    }
+}
+# Print simulated alignment
+# seqCOL(simData)
+```
+
+# Conclusion
+....
+
+# Citation
+A more appropriate citation will be provided for the package in due course.
+In the meantime, kindly cite the package as, <em>Sadiq, H. 2026. "queeems:
+Quantify the Extent of Evolutionary Evidence in Molecular Sequences".
+Bioconductor R Package. doi:10.18129/B9.bioc.queeems.</em>
+
+# References
+
+<div id="refs"></div>
+
+# Appendix: Sample Data Analyses (Non-R) Code
+Example `CODEML` script executed in `PAML` to infer single alignment-wide
+$\omega$ estimates for some of the data sets analysed above.
+```{bash, eval=FALSE}
+    seqfile   = seq.nex
+    treefile  = seq.tre
+    outfile   = seq.out
+    noisy     = 0
+    verbose   = 0
+    seqtype   = 1
+    ndata     = 1
+    icode     = 0
+    cleandata = 0
+    model     = 0
+    NSsites   = 0
+    CodonFreq = 3
+    estFreq   = 0
+    clock     = 0
+    fix_omega = 0
+    omega     = 1e-05
+```
+
+# Session info
+
+The output of `sessionInfo()` from the computer where this file is generated
+is provided below.
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```

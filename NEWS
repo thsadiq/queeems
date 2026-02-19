@@ -1,0 +1,12 @@
+Sadiq, H. (2025), "queeems: Quantify the Extent of Evolutionary Evidence in
+    Molecular Sequences", Bioconductor R Package.
+
+This file documents package changes since first submission on Bioconductor.
+
+0.99.0 (2025-12-31): First Submitted Version
++ Submitted on Bioconductor for review.
++ Edited the DESCRIPTION, README and vignettes with
+  Bioconductor-esque installation instructions.
++ Updated temporary inst/CITATION file.
++ Bumped package version number to *.**.1.
+

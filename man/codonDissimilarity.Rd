@@ -20,7 +20,7 @@
 
 \details{
     The input \code{BStringSet} object can be created with the
-    \code{\link{BioStrings::readBStringSet}} function. \code{diffUnit}
+    \code{\link{Biostrings::readBStringSet}} function. \code{diffUnit}
     represents the number of nucleotide mismatches that is preferred. Let
     the unique codons at each genetic sequence alignment site be denoted
     as \code{i = 1, 2, ..., k}, where \code{k} can not be more than the
@@ -46,7 +46,7 @@
 \seealso{
     \code{\link{queeemsExtdata}} that returns paths to the example
     external DNA data that can be processed with the described function.
-    \code{BioStrings::readBStringSet}, a necessary feeder function may
+    \code{Biostrings::readBStringSet}, a necessary feeder function may
     also be a useful resource. The \code{\link{baseFrequency}} function
     implicitly uses this function.
 }

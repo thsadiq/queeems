@@ -40,9 +40,9 @@
 }
 
 \references{
-    Efron, B. & Hastie, T. (2016). \emph{Computer Age Statistical Inference.
-        Algorithms, Evidence and Data Science}. Cambridge, UK: Cambridge
-        University Press.
+    Efron, B. and Hastie, T. (2016). \emph{Computer Age Statistical
+    Inference. Algorithms, Evidence and Data Science}. Cambridge, UK:
+    Cambridge University Press.
 }
 
 \examples{

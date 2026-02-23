@@ -1,16 +1,17 @@
 citHeader("To cite the queeems package in publications use:")
 
-citEntry(entry = "article",
+citEntry(entry = "manual",
         title = "queeems: Quantify the Extent of Evolutionary Evidence
                   in Molecular Sequences",
         author = personList(as.person("Hassan Sadiq")),
-        journal = "R Package",
+        organization = "R Package Version 0.99",
         year = "2026",
         volume = "",
         pages = "",
         doi = "",
-        url = "",
+        url = "https://github.com/thsadiq/queeems",
         textVersion = 
         paste("Sadiq, H. (2026)",
               "queeems: Quantify the Extent of Evolutionary Evidence
-              in Molecular Sequences", "R Package"))
+              in Molecular Sequences", "R Package Version 0.99", "url:
+              https://github.com/thsadiq/queeems"))

@@ -17,7 +17,7 @@ Description: Biological inferences obtained from molecular data are only as
     generated with respect to DNA, codon and amino acids to allow for
     straightforward applications in extensive computational biology
     inquiries, including natural selection analyses.
-Depends: R (>= 4.4), gtools, Matrix, Biostrings
+Depends: R (>= 4.4), gtools, Matrix, Biostrings, stats
 Imports: methods
 Suggests: BiocManager, BiocStyle, bookdown, htmltools, knitr,
           testthat (>= 3.0.0), vegan, yaml

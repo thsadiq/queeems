@@ -4,109 +4,140 @@
 \title{Estimate Saturation Index For Protein Data}
 
 \description{
-    Estimate saturation index for molecular sequences
-    with respect to DNA, codon or amino acid bases.
+    Assess the degree of evolutionary saturation in molecular sequences.
 }
 
 \usage{
-    seqSaturation(fastafile, approach, gammaPset=c(l=0.1,u=10,mw=3))
+    seqSaturation(fastafile, approach, wsize, wless1, weightmax)
 }
 
 \arguments{
     \item{fastafile}{a character input of the full path to a \code{.fasta}
-        file that contains the protein sequence(s) to be analysed.}
-    \item{basename}{one of `\code{dna}`, `\code{codon}` or `\code{aa}` that
-        indicates how to decipher the bases of the input sequence.}
-    \item{approach}{an integer that indicates the preferred saturation
-        assessment method. It can be any one of \code{{1,2,3}}.}
+        file that contains the protein data to be analysed.}
+    \item{approach}{one of `\code{A}`, `\code{B}` or `\code{C}` that
+        indicates the preferred saturation assessment method.}
+    \item{wsize}{number of \eqn{\pi} parameter weight classes.}
+    \item{wless1}{fraction of \eqn{\pi} weight classes to be less than one.}
+    \item{weightmax}{maximum \eqn{\pi} weight value.}
 }
 
 \details{
-    Three molecular saturation verification techniques are accessible
-    through the \code{seqSaturation} function. The logic behind the
-    techniques are the following.
+    At least, three molecular saturation verification techniques are planned
+    to be incorporated into the package. However, only one is currently
+    accessible through the \code{seqSaturation} function. The logic behind the
+    technique is presented below.
     \itemize{
-        \item \bold{Technique 1 (\code{approach = 1}):} codons are
-            combinations of nucleotide bases. This attribute enable codons
-            to be particularly useful for more extensive evolutionary
-            analyses, including the popular investigation of natural
-            selection as a ratio of non-synonymous to synonymous codon
-            substitution rates. In addition, due to the smaller set of
-            nucleotide compared to codon bases, the former are expected
-            to lose evolutionary information faster. The substitution
-            saturation test built upon this reasoning culminates in the
-            following hypotheses statements.
+        \item \bold{Technique 1 (\code{approach = \code{"A"}}):}
         \itemize{
-            \item \emph{Null hypothesis (\code{H0})}: Retrievable
-                evolutionary information is similar for both nucleotide and
-                codon data. That is, sequence is saturated.
+            Codons are combinations of nucleotide bases. Codons are therefore
+            more appealing for rigorous evolutionary analyses, including the
+            popular investigation of natural selection as a ratio of
+            non-synonymous to synonymous codon substitution rates. In addition,
+            due to the smaller set of nucleotide bases (= 4) compared to codon
+            bases (= 64), the former are expected to lose evolutionary
+            information faster. The substitution saturation test built upon
+            this reasoning reduces to the following hypotheses statements.
+            \item \emph{Null hypothesis (\code{H0})}: Evolutionary information
+                contained in codon data is significantly \bold{more} than the
+                information retrievable from associated nucleotide data. That
+                is, sequence is \bold{not} saturated. \bold{\code{(Bayes
+                Factor \eqn{\leq} 100).}}
             \item \emph{Alternative hypothesis (\code{H1})}: Evolutionary
-                information contained in codon data is \bold{more} than the
-                information retrievable from associated nucleotide data.
-                That is, sequence is \bold{not} saturated.
-        }
-        These hypotheses are verified using Bayes factors generated from
-        the following expression.
-        \deqn{
-            A = B.
-        }
+                information retrievable in the codon data is significantly
+                eroded or insufficient for evolutionary analyses, such that
+                nucleotide models reveal more about the data. That is,
+                sequence is saturated. \bold{\code{(Bayes Factor > 100).}}
 
-        \item \bold{Technique 2 (\code{approach = 2}):} a significant number
-            of existing codon models of evolution tolerate only one
-            nucleotide mismatch between codon pairs. The assumption is
-            that not enough time has passed for more than a single
-            substitution event to have occurred. The following hypotheses
-            statements are consequence of this widely adopted assumption.
-        \itemize{
-            \item \emph{Null hypothesis (\code{H0})}: Observed base
-                frequencies distribution is better supported by a model that
-                permits both two and three nucleotide mismatches per codon
-                pair. That is, sequence is saturated.
-            \item \emph{Alternative hypothesis (\code{H1})}: The frequencies
-                of the codon bases that make up the protein data are better
-                described by a model that supports only a single nucleotide
-                mismatch between codon pairs. That is, sequence is \bold{not}
-                saturated.
-        }
-        The Bayes factor for verifying these statements can be expressed
-        as follows.
-        \deqn{
-            C = D.
-        }
+            To verify these hypotheses, it is assumed that the number of
+            nucleotide and codon bases observed at each of the corresponding
+            positions of protein data follows a multinomial distribution. Bayes
+            factors are then estimated independently for each codon site,
+            \code{i = (1, 2, ..., n)}, as the ratio of maximum posterior
+            log-likelihoods as follows.
+            \deqn{
+                \code{BF}_{i} = \frac{LogL\big(X_{\star i}^{(k)} |
+                        \boldsymbol{\pi}_{\star i}^{(k)}\big)}
+                        {LogL\big(Y_{\star i} |
+                        \boldsymbol{\pi}_{\star i}^{\code{cdn}}\big)}
+                    \propto
+                    \frac{\displaystyle{\sum_{k=1}^{3}} \bigg(
+                    \max_{\boldsymbol{\pi}^{(k)}}
+                    \displaystyle{\sum_{j=1}^{4}} x_{ji}^{(k)} \times
+                    \log\left(\pi_{ji}^{(k)}\right) \bigg)}
+                    {\displaystyle{\max_{\boldsymbol{\pi}^{\code{cdn}}}}
+                    \displaystyle{\sum_{m=1}^{61}} y_{mi} \times
+                    \log\left(\pi_{mi}^{\code{cdn}}\right) },
+            }
+            where,
+            \itemize{
+                \item \eqn{Y_{\star i}} = data at codon position \code{i},
+                \item \eqn{\boldsymbol{\pi}_{\star i}^{\code{cdn}}} =
+                    theoretical proportions of sense codons at site \code{i},
+                \item \eqn{X_{\star i}^{(k)}} = nucleotide data in position
+                    \code{k = (1, 2, 3)} at codon site \code{i},
+                \item \eqn{\boldsymbol{\pi}_{\star i}^{(k)}} = theoretical
+                    proportions of nucleotide bases at position \code{k} of
+                    codon site \code{i},
+                \item \eqn{y_{mi}} = number of sense codon \code{m} observed
+                    at codon \code{i},
+                \item \eqn{x_{ji}^{(k)}} = number of nucleotide base \code{j}
+                    recorded at position \code{k} of codon site \code{i}.
+            }
 
-        \item \bold{Technique 3 (\code{approach = 3}):} this is an extension
-            of \code{Technique 2} that allows for the hypotheses to be nested
-            such that a likelihood ratio test becomes applicable with the
-            following updated hypothesis statements.
-        \itemize{
-            \item \emph{Null hypothesis (\code{H0})}: Including information
-                about one, two and three nucleotide mismatches per codon
-                pair better capture the evolutionary evidence that have
-                accrued in the protein data. That is, sequence is saturated.
-            \item \emph{Alternative hypothesis (\code{H1})}: Considering only
-                one nucleotide mismatch per codon pair captures as much of
-                the evidence that has accrued in the protein data. That is,
-                sequence is \bold{not} saturated.
-        }
-        These hypotheses statements are assessed with the following
-        likelihood ratio expression.
-        \deqn{
-            E = F.
+            Values of \eqn{\boldsymbol{\pi}} that the likelihoods are maximised
+            over for each site are pre-determined based on a technique adopted
+            from FUBAR. Weights of size \code{w = nweights} \eqn{\geq 4} within
+            the \code{(0, weightmax)} interval are first generated such that
+            \code{wless1} fraction of the weights are less than one. For more
+            details about the weight generation process, see
+            \code{\link{fubarweights}}. All possible, \eqn{z = (w!)/(w-4)!},
+            four-weight combinations without repetitions are then sampled and
+            converted to \code{z} vectors of nucleotide frequencies
+            \eqn{\left( \boldsymbol{\pi}^{(k)} \right)} using the
+            \code{\link{softmax}} transformation. The \eqn{z} codon frequencies
+            \eqn{\left( \boldsymbol{\pi}^{\code{cdn}} \right)} considered at
+            each site are obtained as the product of the frequencies of the
+            associated nucleotide triplets as it is conventionally implemented
+            in the \code{F3x4} substitution models.
+
+            Observe that the log-likelihood expressions are similar to that
+            of the Shannon index for quantifying information entropy. That
+            is in line with the hypotheses statements. Also observe that the
+            log-lilihood estimates will always be negative for both the
+            numerator and denominator of the Bayes factor expression, because
+            the \code{x, y} counts are strictly non-negative and the
+            theoretical proportions are always fractions. Therefore, to avoid
+            spurious outcomes, the log-likelihood estimates were transformed
+            into approximate posterior probabilities using the
+            \code{\link{softmax}} identity before maximising.
+
+            A single Bayes factor is also estimated to assess the overall
+            extent of saturation of the protein sequence data, as the ratio of
+            the sum of the site log-likelihoods as follows.
+            \deqn{
+                \code{BF} = \frac{\bigg(\displaystyle{\sum_{i=1}^{n}}
+                    LogL\big(X_{\star i}^{(k)} |
+                        \boldsymbol{\pi}_{\star i}^{(k)}\big) \bigg)^{-1}}
+                        {\bigg(\displaystyle{\sum_{i=1}^{n}}
+                    LogL\big(Y_{\star i} |
+                        \boldsymbol{\pi}_{\star i}^{\code{cdn}} \big)
+                        \bigg)^{-1}}
+            }
+
+            The inverse is necessary because the log-likelihood estimates are
+            always negative. For both the site-wise and global assessments,
+            saturation is inferred if the corresponding Bayes factor estimate
+            is greater than 100.
         }
     }
-    All these techniques analysed more thoroughly in an upcoming article
-    that heavily uses functions from the \code{\link{queeems}} package.
 }
 
 \value{
    The output object returned is determined by the analyses technique.
-   Bayesian outputs from \code{Technique 1} and \code{Technique 2} are
-   returned as \code{\link{saturateBF}} objects. Outputs from the
-   frequentist-based \code{Technique 3} are returned as
-   \code{\link{saturatePV}} objects. Both objects contain details of
-   the site-wise entropy estimates and other useful characteristic
-   information. The respective function help files may be consulted
-   for further details.
+   Bayesian outputs from \code{Technique 1} is returned as a
+   \code{\link{saturateBF}} object. The object contains details of the
+   site-wise likelihood estimates and other useful characteristic information.
+   The respective function help file may be consulted for further details.
 }
 
 \author{
@@ -126,19 +157,48 @@
             \itemize{
                 \item \code{\link{mnomLogl}}
             }
-        \item Functions useful for transforming molecular data to useful
-            frequencies:
+        \item Functions useful for transforming molecular data into the
+            \code{x, y} counts used in the equations above:
             \itemize{
                 \item \code{\link{baseFrequency}}
                 \item \code{\link{codonDissimilarity}}
+            }
+        \item Weight generating function.
+            \itemize{
+                \item \code{\link{fubarweights}}
+            }
+        \item Function that converts nucleotide to codon frequencies.
+            \itemize{
+                \item \code{\link{n2cFreqs}}
+            }
+        \item Softmax identity function.
+            \itemize{
+                \item \code{\link{softmax}}
             }
     }
 }
 
 \references{
-    Xia, X., Xie, Z., Salemi, M., Chen, L. and Wang, Y. (2003). An Index
-    of Substitution Saturation and its Application, \emph{Molecular
-    Phylogenetics and Evolution} \bold{26}(1): 1-7.
+    Benjamini, Y. and Hochberg, Y. (1995). Controlling the False Discovery
+    Rate: A Practical and Powerful Approach to Multiple Testing,
+    \emph{Journal of the Royal Statistical Society: Series B}. \bold{57}(1):
+    289-300.
+
+    Efron, B. and Hastie, T. (2016). \emph{Computer Age Statistical
+    Inference. Algorithms, Evidence and Data Science}. Cambridge, UK:
+    Cambridge University Press.
+
+    Goldman, N. and Yang, Z. (1994) A Codon-Based Model of Nucleotide
+    Substitution for Protein-Coding DNA Sequences, \emph{Molecular
+    Biology and Evolution} \bold{11}(5): 725-736.
+
+    Kass, R. E. and Raftery, A. E. (1995) Bayes Factors, \emph{Journal
+    of the American Statistical Association} \bold{90}(430): 773-795.
+
+    Murrell, B., Moola, S., Mabona, A., Weighill, T., Sheward, D.,
+    Kosakovsky Pond, S. L. and Scheffler, K. (2013) FUBAR: A Fast,
+    Unconstrained Bayesian AppRoximation for Inferring Selection,
+    \emph{Molecular Biology and Evolution} \bold{30}(5): 1196-1205.
 
     Renyi, A. (1961). On Measures of Information and Entropy,
     \emph{Proceedings of the Fourth Berkeley Symposium on Mathematics,
@@ -146,11 +206,15 @@
 
     Shannon, C. E. (1948). A Mathematical Theory of Communication, \emph{The
     Bell System Technical Journal} \bold{27}(3): 379-423.
+
+    Xia, X., Xie, Z., Salemi, M., Chen, L. and Wang, Y. (2003). An Index
+    of Substitution Saturation and its Application, \emph{Molecular
+    Phylogenetics and Evolution} \bold{26}(1): 1-7.
 }
 
 \examples{
     proteinFile <- queeemsExtdata("VertCOI.fasta")
-    testEG <- seqSaturation(proteinFile, 1)
+    testEG <- seqSaturation(proteinFile, "A", 5, 0.4, 5)
     summary(testEG)
     testEG
 }

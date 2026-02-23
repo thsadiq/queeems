@@ -38,7 +38,7 @@ setMethod("show", "saturatePV", function(object) {
 
 setMethod("summary", "saturatePV", function(object) {
     ans0 <- pvproc(object)
-    relevant <- data.frame( Global.Summary=c(invary=ans0$fixed,
+    relevant <- data.frame( Overall.Summary=c(invary=ans0$fixed,
         nsites=ans0$nLength, satur.s=length(ans0$saturated),
         null.logL=ans0$gH0, alt.logL=ans0$gH1, test.stat=ans0$gstat,
         crit.value=ans0$gcrit, p.value=ans0$gpval, seq.state=ans0$gFin))

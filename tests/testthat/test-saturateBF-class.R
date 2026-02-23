@@ -10,8 +10,8 @@ test_that("code compiled in saturateBF-class.R is operational", {
     h0Total2 <- 1e+04
     h0Total3 <- 1e+05
     altTotal <- 50000
-    bfIN <- c( runif(7), runif(nsiteIN-nFail,11,50))
     hsplit <- c( gtools::rdirichlet(1, rexp(nsiteIN,1)))
+    bfIN <- c( runif(nFail), runif(nsiteIN-nFail,101,150))
     trialdef1 <- new("saturateBF", bf.pv=bfIN, nuLL=h0Total1*hsplit,
         altLL=altTotal*hsplit, noInfo=sample(nsiteIN,nFixed), nsites=nsiteIN)
     trialdef2 <- new("saturateBF", bf.pv=bfIN, nuLL=h0Total2*hsplit,
@@ -25,9 +25,8 @@ test_that("code compiled in saturateBF-class.R is operational", {
     expect_equal( sum( LogL0(trialdef2)), h0Total2)
     expect_equal( sum( LogL1(trialdef3)), altTotal)
     expect_equal( length( nonvaries(trialdef1)), nFixed)
-    expect_equal( summary(trialdef3)["seq.state",], "Saturated")
-    expect_equal( summary(trialdef2)["seq.state",], "Inconclusive")
-    expect_equal( summary(trialdef1)["seq.state",], "Not Saturated")
+    expect_equal( summary(trialdef1)["seq.state",], "Saturated")
+    expect_equal( summary(trialdef3)["seq.state",], "Not Saturated")
     expect_equal( summary(trialdef3)["satur.s",], as.character(nsiteIN-nFail))
 })
 

@@ -38,6 +38,9 @@
         \log \left( \pi_{i} \right) \; \propto \; \sum_{i=1}^{k} x_{i}
         \log \left( \pi_{i} \right).
     }
+    The expression can be shown to produce a maximum likelihod estimate of
+    \eqn{\hat{\pi}_{i} = x_{i} / n} by using a Lagrange multiplier that
+    imposes the constraint that \eqn{\sum_{i=1}^{k} \pi_{i} = 1}.. 
 }
 
 \value{

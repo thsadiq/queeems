@@ -89,7 +89,7 @@ initiated with the following code.
 library("queeems")
 
 # ><>< # Retrieve path to simulated tutorial data folder
-datadir <- system.file("example/", package="queeems")
+datadir <- system.file("extdata/example/", package="queeems")
 
 # ><>< # Read merged molecular sequences data as text
 seqsname <- file.path(datadir, "tut_seqs.txt")

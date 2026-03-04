@@ -29,6 +29,7 @@ export(
     n2cFreqs,
     nonSynonymous,
     queeemsExtdata,
+    seqfilter,
     seqSaturation,
     softmax
 )

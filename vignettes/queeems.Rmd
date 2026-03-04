@@ -84,12 +84,12 @@ generated. Other necessary `scoup` simulation parameters specified include:
 non-synonymous selection coefficients = 0.50*. The data analysis was
 initiated with the following code.  
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 # ><>< # Load package into current R session
 library("queeems")
 
 # ><>< # Retrieve path to simulated tutorial data folder
-datadir <- system.file("vignettes/data/", package="queeems")
+datadir <- system.file("example/", package="queeems")
 
 # ><>< # Read merged molecular sequences data as text
 seqsname <- file.path(datadir, "tut_seqs.txt")

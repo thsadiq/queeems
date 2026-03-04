@@ -43,7 +43,7 @@ effpop <- 1000
 sitesize <- 250
 
 # Number of data replications for each tree length
-sims <- 20
+sims <- 8
 
 # OU reversion parameter (Theta) value
 eThta <- 0.0

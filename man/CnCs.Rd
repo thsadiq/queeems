@@ -39,7 +39,7 @@
 \value{
     A \code{\link{cncsframe}} object that contains the following.
     \item{nscensus}{an array of integers that may be accessed with the
-        \code{\link{nsfreqs}} function. They represent site-wise counts,
+        \code{nsfreqs} function. They represent site-wise counts,
         compared to the identified wild-type, of [non-]synonymous
         occurrences.}
     \item{wildseq}{an array of the most frequent, i.e. the identified

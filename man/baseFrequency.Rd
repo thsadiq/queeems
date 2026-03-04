@@ -27,8 +27,8 @@
 }
 
 \value{
-   A \code{\link{baseSummary}} object that contains a matrix of site-wise
-   base frequencies that are labelled with the corresponding base notation.
+    A \code{\link{baseSummary}} object that contains a matrix of site-wise
+    base frequencies that are labelled with the corresponding base notation.
 }
 
 \author{

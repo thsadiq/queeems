@@ -1,5 +1,5 @@
-\name{queeemsExdata}
-\alias{queeemsExdata}
+\name{queeemsExtdata}
+\alias{queeemsExtdata}
 \alias{II.fasta}
 \alias{PI.fasta}
 \alias{RTI.fasta}
@@ -44,10 +44,10 @@
 }
 
 \value{
-   A string that corresponds to the full path of the data saved with the
-   specified \code{filename} input. If \code{filename} is left as its default
-   \code{NULL} value, a list of all the names of all the sequence files that
-   are included with the \code{queeems} package are listed.
+    A string that corresponds to the full path of the data saved with the
+    specified \code{filename} input. If \code{filename} is left as its default
+    \code{NULL} value, a list of all the names of all the sequence files that
+    are included with the \code{queeems} package are listed.
 }
 
 \author{

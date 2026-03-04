@@ -26,8 +26,9 @@ CnCs <- function(bstringset, synonym, diffceil){
     seqinvaries <- apply(codonprotein, 2, getinvary)
     invarysites <- which( c(seqinvaries))
     wildcodons <- bstringCodons(wildseqs)
-    answer <- sapply(seq(1,length(wildcodons)), function(i){
-        nscodoncount(wildcodons[i], codonprotein[,i], nonsynarray) } )
+    answer <- vapply(seq(1,length(wildcodons)), function(i){
+        nscodoncount(wildcodons[i], codonprotein[,i], nonsynarray) },
+        FUN.VALUE=vector("integer",1))
     names(answer) <- NULL
     nsname <- ifelse(synonym, "Synonymous", "Non-Synonymous")
     reqcounts <- new("cncsframe", nscensus=answer,

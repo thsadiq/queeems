@@ -36,7 +36,7 @@
 }
 
 \value{
-   A 61-by-61 logical matrix. See \bold{Details}.
+    A 61-by-61 logical matrix. See \bold{Details}.
 }
 
 \author{

@@ -7,7 +7,7 @@
 codon2int <- function(codon){
     nucIDs <- c(A=1, C=2, G=3, T=4)
     codonxters <- unlist( strsplit(codon, ""))
-    nuConvert <- nucIDs[codonxters]
+    nuConvert <- as.integer(nucIDs[codonxters])
     names(nuConvert) <- NULL
     return(nuConvert)
 }
@@ -33,7 +33,7 @@ vetFreqs <- function(nucFracs){
 
 n2cFreqs <- function(nucFracs){
     nucFreqs <- vetFreqs(nucFracs)
-    allcodonID <- sapply(senseCodon, codon2int)
+    allcodonID <- vapply(senseCodon, codon2int, FUN.VALUE=vector("integer",3))
     codonWeights <- apply(allcodonID, 2, function(j) prod(nucFreqs[j]))
     codonFreqs <- codonWeights / sum(codonWeights)
     return(codonFreqs)

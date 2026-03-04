@@ -30,22 +30,23 @@ bfproc <- function(satube){
 
 showsout <- function(slist, app){
     detect <- length(slist$saturated)
-    w0 <- "\nLogL(Not Saturated \U03B8\U2080 | Full Data):\t"
-    w1 <- "\nLogL(Saturated \U03B8\U2081 | Full Data):\t\t"
-    cat(paste0("\n",paste(rep(":",59),collapse="")))
-    cat( paste0("\nSaturation Analyses Output Summary: ",app))
-    cat(paste0("\n",paste(rep(":",59),collapse="")))
-    cat("\nInvariant Sites:\t\t\t ", slist$fixed, "/", slist$nLength)
-    cat("\nSaturated Sites:\t\t\t ", detect, "/", slist$nLength)
-    cat(w0, sprintf("% .2f", slist$gH0))
-    cat(w1, sprintf("% .2f", slist$gH1))
+    w0 <- "LogL(Not Saturated \U03B8\U2080 | Full Data):\t"
+    w1 <- "LogL(Saturated \U03B8\U2081 | Full Data):\t\t"
+    writeLines(paste0("\n\n",paste(rep(":",59),collapse="")))
+    writeLines(paste0("Saturation Analyses Output Summary: ",app))
+    writeLines(paste0("",paste(rep(":",59),collapse="")))
+    writeLines(paste0("Invariant Sites:\t\t\t ",
+        slist$fixed, "/", slist$nLength))
+    writeLines(paste0("Saturated Sites:\t\t\t ",detect,"/",slist$nLength))
+    writeLines(paste0(w0, sprintf("% .2f", slist$gH0)))
+    writeLines(paste0(w1, sprintf("% .2f", slist$gH1)))
 }
 
 setMethod("show", "saturateBF", function(object) {
     ans0 <- bfproc(object)
     priorprint <- showsout(ans0, "Bayesian")
-    cat("\nGlobal Bayes Factor:\t\t\t ", sprintf("%.2f", ans0$gBF))
-    cat("\nGlobal Decision:\t\t\t ", ans0$gFin)
+    cat("Overall Bayes Factor:\t\t\t", sprintf("%.2f", ans0$gBF))
+    cat("\nOverall Decision:\t\t\t", ans0$gFin)
     cat(paste0("\n",paste(rep("=",59),collapse=""),"\n\n"))
     }
 )

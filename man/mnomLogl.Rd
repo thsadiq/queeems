@@ -44,8 +44,8 @@
 }
 
 \value{
-   The scaled likelihood value estimated from the final expression presented
-   in \bold{Details}. The output should be a negative value.
+    The scaled likelihood value estimated from the final expression presented
+    in \bold{Details}. The output should be a negative value.
 }
 
 \author{
@@ -55,7 +55,7 @@
 \seealso{
     Some other information retrieval functions within the \code{\link{queeems}}
     package that are straightforwardly applicable to molecular protein data.
-    These include, \code{\link{dnaEntropy}}, \code{\link{cncsEntropy}} and
+    These include, \code{\link{cncsentropy}} and
     \code{\link{seqSaturation}}. Functions such as \code{\link{baseFrequency}},
     \code{\link{CnCs}} and \code{\link{codonDissimilarity}}, that are needed
     to obtain the counts required to successfully execute the described

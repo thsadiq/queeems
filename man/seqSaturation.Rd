@@ -27,21 +27,22 @@
     accessible through the \code{seqSaturation} function. The logic behind the
     technique is presented below.
     \itemize{
-        \item \bold{Technique 1 (\code{approach = \code{"A"}}):}
+        \item \bold{Technique 1 (\code{approach = "A"}):}
         \itemize{
-            Codons are combinations of nucleotide bases. Codons are therefore
-            more appealing for rigorous evolutionary analyses, including the
-            popular investigation of natural selection as a ratio of
-            non-synonymous to synonymous codon substitution rates. In addition,
-            due to the smaller set of nucleotide bases (= 4) compared to codon
-            bases (= 64), the former are expected to lose evolutionary
-            information faster. The substitution saturation test built upon
-            this reasoning reduces to the following hypotheses statements.
+            \item Codons are combinations of nucleotide bases. Codons are
+            therefore more appealing for rigorous evolutionary analyses,
+            including the popular investigation of natural selection as a
+            ratio of non-synonymous to synonymous codon substitution rates.
+            In addition, due to the smaller set of nucleotide bases (= 4)
+            compared to codon bases (= 64), the former are expected to lose
+            evolutionary information faster. The substitution saturation test
+            built upon this reasoning reduces to the following hypotheses
+            statements.
             \item \emph{Null hypothesis (\code{H0})}: Evolutionary information
                 contained in codon data is significantly \bold{more} than the
                 information retrievable from associated nucleotide data. That
-                is, sequence is \bold{not} saturated. \bold{\code{(Bayes
-                Factor \eqn{\leq} 100).}}
+                is, sequence is \bold{not} saturated. (\bold{\code{Bayes
+                Factor}} \eqn{\leq} \bold{\code{100}}).
             \item \emph{Alternative hypothesis (\code{H1})}: Evolutionary
                 information retrievable in the codon data is significantly
                 eroded or insufficient for evolutionary analyses, such that
@@ -133,11 +134,12 @@
 }
 
 \value{
-   The output object returned is determined by the analyses technique.
-   Bayesian outputs from \code{Technique 1} is returned as a
-   \code{\link{saturateBF}} object. The object contains details of the
-   site-wise likelihood estimates and other useful characteristic information.
-   The respective function help file may be consulted for further details.
+    The output object returned is determined by the analyses technique.
+    Additional techniques are should be incorporated soon. Bayesian outputs
+    from \code{Technique 1} is returned as a \code{\link{saturateBF}} object.
+    The object contains details of the site-wise likelihood estimates and
+    other useful characteristic information. The respective function help
+    file may be consulted for further details.
 }
 
 \author{

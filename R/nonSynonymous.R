@@ -27,7 +27,8 @@ nsynvect <- function(codon, synonym){
 
 nonSynonymous <- function(synonym, diffceil){
     errMsg <- "Invalid `diffceil` input. It can only be set as 0, 1, 2 or 3."
-    nsynArray <- sapply(senseCodon, nsynvect, synonym=synonym)
+    nsynArray <- vapply(senseCodon, nsynvect,
+        synonym=synonym, FUN.VALUE=vector("logical",61))
     if(!(diffceil %in% seq(0,3))) stop( errMsg )
     mainMatrix <- maxdiff(diffceil) & nsynArray
     return(mainMatrix)

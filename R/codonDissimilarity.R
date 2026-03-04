@@ -13,8 +13,8 @@ noncensus <- function(sitebaseID, siteData, triLogic, senses){
 siteNcensus <- function(siteData, triLogic, senses){
     dissFreqs <- matrix(0, nrow=61, ncol=1, dimnames=list(senses))
     availbases <- which(senses %in% siteData)
-    ncvector <- sapply(availbases, noncensus, siteData=siteData,
-                    triLogic=triLogic, senses=senses)
+    ncvector <- vapply(availbases, noncensus, siteData=siteData,
+        triLogic=triLogic, senses=senses, FUN.VALUE=vector("logical",1))
     dissFreqs[availbases] <- as.numeric(ncvector)
     return(dissFreqs)
 }

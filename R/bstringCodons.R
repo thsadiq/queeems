@@ -14,7 +14,8 @@ codonExtant <- function(dnaVector){
     validLength <- (length(dnaVector) %% 3) == 0
     if(!validLength) warning("DNA seq. length not codon-fit.", call.=FALSE)
     terminal <- ifelse(validLength, terminal, (length(dnaVector) %/% 3) * 3)
-    newBases <- sapply(seq(1,terminal,3), miniGEN, bases=dnaVector)
+    newBases <- vapply(seq(1,terminal,3),
+        miniGEN, bases=dnaVector, FUN.VALUE=vector("character",1))
     return(newBases)
 }
 

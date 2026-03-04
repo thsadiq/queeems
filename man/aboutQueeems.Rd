@@ -26,8 +26,8 @@
 }
 
 \value{
-   A text that contains citations associated with the \code{queeems}
-   package, as explained in \bold{Details}.
+    A text that contains citations associated with the \code{queeems}
+    package, as explained in \bold{Details}.
 }
 
 \author{

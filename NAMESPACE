@@ -1,12 +1,15 @@
 import(stats)
+import(gtools)
 import(Matrix)
-importFrom("methods", "is", "new")
-importFrom("Biostrings", "DNAStringSet")
+import("methods")
+import("Biostrings")
 
 exportClasses(
     baseSummary,
     citing,
     cncsframe,
+    geneindex,
+    saturateBF,
     siteindices
 )
 
@@ -15,12 +18,40 @@ export(
     baseFrequency,
     bstringCodons,
     CnCs,
+    cncsentropy,
+    codondifferindex,
     codonDissimilarity,
     diffNucBinary,
+    entropyindex,
+    fubarweights,
+    mnomLogl,
+    molentropy,
+    n2cFreqs,
     nonSynonymous,
-    queeemsExtdata
+    queeemsExtdata,
+    seqSaturation,
+    softmax
 )
 
 exportMethods(
+    bstringCodons,
+    codonDissimilarity,
+    nseqs,
+    datatype,
+    basecensus,
+    nORs,
+    nsfreqs,
+    nonvaries,
+    nucbalance,
+    wildtriplets,
+    renyiA,
+    informula,
+    sitentropies,
+    useSyn,
+    gentropy,
+    sitecount,
+    BFs,
+    LogL0,
+    LogL1
 )
 

@@ -26,9 +26,9 @@
 }
 
 \value{
-   A 61-by-61 logical matrix. \code{TRUE} will appear at the row and column
-   intersection of the sense codons that differ by the number of nucleotide
-   bases specified by \code{diffUnit}. \code{FALSE} will appear otherwise.
+    A 61-by-61 logical matrix. \code{TRUE} will appear at the row and column
+    intersection of the sense codons that differ by the number of nucleotide
+    bases specified by \code{diffUnit}. \code{FALSE} will appear otherwise.
 }
 
 \author{

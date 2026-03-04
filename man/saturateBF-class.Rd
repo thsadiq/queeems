@@ -61,25 +61,18 @@
     }
 }
 
-\section{Details}{
-    The \code{\link{saturatePV}} class is a parent class, where the
-    input of the \code{bf.pv} slots has a different interpretation.
-}
-
 \author{
     Hassan Sadiq
 }
 
 \seealso{
-    The parent \code{\link{saturatePV}} class that is applicable to
-    frequentist-based outputs of site-wise molecular saturation analyses.
-    It may also be useful to see the \code{\link{seqSaturation}} function
+    The \code{\link{seqSaturation}} function
     that produces objects of this class.
 }
 
 \examples{
     geneFile <- queeemsExtdata("II.fasta")
-    examine <- seqSaturation(geneFile, 1)
+    examine <- seqSaturation(geneFile, "A", 5, 0.4, 5)
     examine
 }
 

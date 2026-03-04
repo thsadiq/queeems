@@ -1,16 +1,21 @@
 ---
-title: "Quantify the Extent of Evolutionary Evidence in Molecular Sequences"
+title: "queeems: Quantify the Extent of Evolutionary Evidence in Molecular
+Sequences"
 author:
-- name: Hassan Sadiq
-  affiliation: Department of Statistics and Actuarial Science,
-    Stellenbosch University, South Africa
-output:
-    BiocStyle::html_document:
-        toc_float: true
+  - name: Hassan Sadiq
+    affiliation:
+    - Department of Statistics and Actuarial Science,
+        Stellenbosch University, South Africa
+    email: hassan.t.sadiq@gmail.com
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
 package: queeems
-bibliography: citation.bib
-abstract: |
-    Sewall Wright aaa
+bibliography: queeems.bib
 vignette: |
     %\VignetteIndexEntry{queeems Tutorial}
     %\VignetteEngine{knitr::rmarkdown}
@@ -22,17 +27,26 @@ vignette: |
 ```
 
 # Introduction
-Accuracy of inferences from analyses of molecular data, as with every other
-statistical investigation, depends on the data quality. Assessing the
+As with every other statistical investigation, accuracy of inferences from
+analyses of genetic sequences depends on the data quality. Assessing the
 quality of molecular sequences for biological studies requires quantifying
 the degree of evolutionary signature retained in the data. Such an assessment
-is popularly done using a saturation (H) index that is inspired by information
-entropy. A single H index is estimated for an alignment of protein sequences
-and the significance of the evolutionary information retained is assessed
-with the Student's t hypothesis test. The H index is an invaluable
-contribution to computational evolutionary biology studies. Like many other
-existing measures of genetic data quality, the H index is most suited for
-phylogeny reconstruction inquiries.
+is popularly done using the saturation (*H*) index introduced by @xia2002.
+The index is an extension of @shannon1948 information entropy and it is not
+robust to the evolutionary tree that must have generated the data. In general,
+a single H index is estimated for an alignment of protein sequences. The
+significance of the evolutionary information retained in the data is then
+assessed with the Student's t hypothesis test that compares the estimated
+index to a pre-determined threshold. Xia's H index is an invaluable
+contribution to computational evolutionary biology studies. It is however
+best suited for phylogeny reconstruction inquiries. `queeems` is a R
+[@cran2025] package hosted on the Bioconductor [@bioc2004] platform that
+contains Bayesian functions that can be used to assess the quality of
+protein sequences beyond just for phylogeny reconstruction purposes.
+It can also be used to assess how suitable protein sequences are for broader
+evolutionary analyses, including natural selection investigations. In this
+practical application of some of the primary functions in the package, I use
+simulated genetic sequences to demonstrate some utilities of the package.
 
 
 # Installation
@@ -43,93 +57,193 @@ if(!requireNamespace("BiocManager", quietly=TRUE))
 BiocManager::install("queeems")
 ```
 The developmental version of the package that contains the most recent
-updates, is available under the `devel` tab of the Bioconductor platform.
+updates, is available under the `devel` tab of the Bioconductor platform
+and can be installed by running the following code, just before the final
+install line above: `BiocManager::install(version="devel")`.
 
-# Sample Code
-Three primary evolutionary algorithms .... Example of `R`
-[@cran2024] ... package.
+# Data
+The molecular sequences analysed herein are generated with the `scoup`
+[@sadiq2024] package that allows genetic sequences to be simulated following
+a simplified Ornstein-Uhlenbeck (OU) process. A R file that contains the
+simulation code and a folder that contains the simulated data are available
+in the `vignettes/data/` folder as part of the `queeems` package. Results from
+analyses of an empirical `VertCOI.fasta` data from DAMBE [@xia2018] is also
+presented below. The data can also be accessed in the `inst/extdata/` folder
+of the `queeems` package.
 
-## Ornstein-Uhlenbeck Sensitivity
-```{r, eval=TRUE}
-# Make package accessible in R session
-library(scoup)
+# Simulation Studies
+Genetic sequence alignments were generated on a balanced bifurcating
+evolutionary tree that has 64 leaves. For each data simulated, the length
+of the internal and the terminal branches were all kept equal to `0.10` for
+each execution. The *variance of synonymous selection coefficients* was
+specified as, $\sigma_{s}^{2}=0.01$ to ensure that positive natural selection
+effect [@spielman2015] will be detected. Eight data replicates were
+generated. Other necessary `scoup` simulation parameters specified include:
+*number of codon sites = 250*, *OU reversion rate = 0.00*,
+*OU asymptotic variance = 0.00*, *OU asymptotic mean = 0.00*, *variance of
+non-synonymous selection coefficients = 0.50*. The data analysis was
+initiated with the following code.  
 
-# Number of extant taxa
-leaves <- 8
+```{r, eval=FALSE}
+# ><>< # Load package into current R session
+library("queeems")
 
-# Number of codon sites
-sSize <- 15
+# ><>< # Retrieve path to simulated tutorial data folder
+datadir <- system.file("vignettes/data/", package="queeems")
 
-# Number of data replications for each parameter combination
-sims <- 1
+# ><>< # Read merged molecular sequences data as text
+seqsname <- file.path(datadir, "tut_seqs.txt")
+seqstext <- readLines(seqsname)
 
-# OU reversion parameter (Theta) value
-eThta <- c(0.01)
+# ><>< # Extract information about number of simulated replicates
+sbreaks <- which(seqstext == "  64  750")
+nreps <- length(sbreaks)
 
-# OU asymptotic variance value
-eVary <- c(0.0001)
+# ><>< # Create data frames to save interesting outputs
+homoBF <- vector("numeric", nreps)
+cnames <- paste0("r", seq(1,nreps))
+nucent <- matrix(NA, 750, nreps, dimnames=list(NULL,cnames))
+codent <- matrix(NA, 250, nreps, dimnames=list(NULL,cnames))
+aasent <- matrix(NA, 250, nreps, dimnames=list(NULL,cnames))
+sbayes <- matrix(NA, 250, nreps, dimnames=list(NULL,cnames))
 
-# OU landscape shift parameters
-hbrunoStat <- hbInput(c(vNvS=1, nsynVar=0.01))
+# ><>< # Storage for saturation-free data to allow subsequent analyses
+nosatpath <- file.path(tempdir(), "satfree.txt")
 
-# Sequence alignment size information
-seqStat <- seqDetails(c(nsite=sSize, ntaxa=leaves))
-
-# Iterate over all listed OU variance values
-for(g in seq(1,length(eVary))){
-
-    # Iterate over all listed OU reversion parameter values
-    for(h in seq(1,length(eThta))){
-
-        # Create appropriate simulation function ("ou") object
-        adaptStat <- ouInput(c(eVar=eVary[g],Theta=eThta[h]))
-
-        # Iterate over the specified number of replicates
-        for(i in seq(1,sims)){
-
-            # Execute simulation
-            simData <- alignsim(adaptStat, seqStat, hbrunoStat, NULL)
-        }
-    }
+# ><>< # Adhoc function to extract saturation-free data
+printsite <- function(b0, sqarray, ipath=nosatpath){
+    ntag <- rownames(sqarray)[b0]
+    sqline <- paste(sqarray[b0,], collapse="")
+    fulltxt <- paste0(">", ntag, "\n", sqline)
+    write.table(fulltxt, ipath, TRUE, FALSE, col.name=FALSE, row.names=FALSE)
+    return(0)
 }
-# Print simulated alignment
-# seqCOL(simData)
+
+# ><>< # Analyse data replicates captured from merged data file
+for(a0 in seq(1,nreps)){
+
+    # ><>< # Extract and temporarily save a sequence replicate
+    init <- sbreaks[a0] + 1
+    halt <- sbreaks[a0] + 128    # >< # Each replicate is from 64 leaves
+    seqrep <- seqstext[seq(init,halt)]
+    tempfile <- file.path(tempdir(), "iseqs.fasta")
+    write.table(seqrep, file=tempfile, append=FALSE,
+        quote=FALSE, row.names=FALSE, col.names=FALSE)
+
+    # ><>< # Execute saturation analysis
+    satest <- seqSaturation(tempfile, "A", 6, 0.4, 7)
+    homoBF[a0] <- as.numeric( summary(satest)["fullBF",])
+    sbayes[,a0] <- BFs(satest)
+
+    # ><>< # Extract and save saturation-free sequence locations
+    nullsites <- which(BFs(satest) < 100)
+    sieved <- seqfilter(tempfile, nullsites, "codon")
+    imatrix <- as.matrix(sieved)
+    itext <- paste0("  ", nrow(imatrix), "  ", ncol(imatrix))
+    write.table(itext,nosatpath,a0!=1,FALSE,row.names=FALSE,col.names=FALSE)
+    pholder <- vapply(seq(1,nrow(imatrix)), printsite, imatrix, FUN.VALUE=0)
+    write.table("\n",nosatpath,TRUE,FALSE,row.names=FALSE,col.names=FALSE)
+
+    # ><>< # Execute codon entropy analysis
+    entcdn <- molentropy(tempfile, "codon", "shannon")
+    codent[,a0] <- sitentropies(entcdn)
+
+    # ><>< # Process nucleotide entropy analysis
+    entnuc <- molentropy(tempfile, "dna", "shannon")
+    nucent[,a0] <- sitentropies(entnuc)
+
+    # ><>< # Transform nucleotide to amino acid sequences
+    dnaformat <- Biostrings::readDNAStringSet(tempfile)
+    aaformat <- Biostrings::translate(dnaformat)
+    Biostrings::writeXStringSet(aaformat, tempfile)
+
+    # ><>< # Implement amino acid entropy analysis
+    entamino <- molentropy(tempfile, "aa", "shannon")
+    aasent[,a0] <- sitentropies(entamino)
+
+    # ><>< # Provide analysis progress update
+    message("Completed analyses of data replicate ", sprintf("%02.0f",a0))
+}
+```
+
+Analytical estimates of the ratio of non-synonymous to synonymous substitution
+rates ($\mathrm{d}N/\mathrm{d}S$) are obtained from `scoup` where they are
+calculated using expressions from @spielman2015. The maximum likelihood
+estimates of the ratio ($\omega$) are obtained using PAML [@yang2007] and
+the control files used for the execution of the analyses are available in
+the `vignettes/data/` folder in the `queeems` package. The correlation
+between the entropy estimates and the Bayes factors demonstrate consistency
+of the overall inferences with the entropy-based technique used in DAMBE
+[@xia2018].
+
+# Empirical Analyses
+The `VertCOI.fasta` data [@xia2018] contains mitochondrial COI sequences from
+eight vertebrates including: *Masturus lanceolatus* (sunfish), *Homo sapiens*
+(human), *Bos taurus* (cow), *Balaenotera musculus* (blue whale), *Pongo
+pygmaeus* (Bornean orangutan), *Pantroglodytes* (chimpanzee), *Gallus gallus*
+(chicken) and *Alligator mississippiensis* (American alligator) [@xia2009].
+Each sequence comprise 504 codon bases. The results obtained from analysing
+the data using DAMBE [@xia2018] (output screenshots are also available in
+the `vignettes/data/` folder) and `queeems` are summarised below.
+
+```{r, eval=TRUE}
+# Analyse data with queeems
+# Generate nice summary plots
+```
+
+---
+|DAMBE                |        |queeems              |        |
+|:--------------------|:------:|:--------------------|:------:|
+|Invariant sites prop.|0.0000  |Invariant sites prop.|a       |
+|Mean H               |0.4457  |Saturated sires      |a       |
+|Std. error of H      |0.0148  |Overall Bayes factor |a       |
+|Iss                  |0.2698  |Overall decision     |a       |
+|Iss.c (symmetric)    |0.8093  |Overall decision     |Not sat.|
+|Iss.c (asymmetric)   |0.7095  |                     |        |
+|Overall decision     |Not sat.|                     |        |
+Table: Comparative saturation analyses outputs that demonstrate the
+effectiveness of the inference functions in `queeems`.
+
+Inferences from DAMBE show that the data is not saturated given that, for
+both the symmetrical and asymmetrical trees respectively, the critical
+saturation index (`Iss.c = 0.8093 & 0.7095`) is greater than the saturation
+index (`Iss = 0.2698`) estimated for the data. This inference is the same as
+the overall inference obtained with the Bayesian approach with `queeems`. In
+addition, `queems` made it possible to identify sites `...`as saturated sites.
+In fact, excluding the identified sites `increased/reduced` the value of the
+homogeneous maximum likelihood estimate of the ratio of non-synonymous
+to synonymous substitution rate ($\omega$) from ... to .....
+
+Entropy estimates are not directly used as the primary saturation inference
+measures in `queeems`, unlike in DAMBE [@xia2018]. There are however functions
+in `queeems` that can be used to obtain different entropy estimates with
+respect to molecular data. For example, Figure 1 below illustrates ....
+```{r, eval=TRUE}
+# Analyse data with queeems
+# Generate nice summary plots
 ```
 
 # Conclusion
-....
+I demonstrated that, compared to the popular existing software for analysing
+molecular saturation, `queeems` avails the opportunity to allow researchers
+more easily identify the codon sites contributing to overall protein sequence
+saturation. I further showed that such knowledge may lead to improved estimate
+of the magnitude of the natural selection pressure obtained from such protein
+data. The choice of the weight parameters (`size = 6`, `proportion < 1 =
+0.4`, `maximum = 7`) used during the `queeems` analyses presented here is
+arbitrary. A study about the sensitivity of the parameters to the inferences
+obtained is ongoing and intended to be submitted for publication upon
+completion.
 
 # Citation
 A more appropriate citation will be provided for the package in due course.
 In the meantime, kindly cite the package as, <em>Sadiq, H. 2026. "queeems:
 Quantify the Extent of Evolutionary Evidence in Molecular Sequences".
-Bioconductor R Package. doi:10.18129/B9.bioc.queeems.</em>
+Bioconductor R Package.</em>
 
 # References
 
 <div id="refs"></div>
-
-# Appendix: Sample Data Analyses (Non-R) Code
-Example `CODEML` script executed in `PAML` to infer single alignment-wide
-$\omega$ estimates for some of the data sets analysed above.
-```{bash, eval=FALSE}
-    seqfile   = seq.nex
-    treefile  = seq.tre
-    outfile   = seq.out
-    noisy     = 0
-    verbose   = 0
-    seqtype   = 1
-    ndata     = 1
-    icode     = 0
-    cleandata = 0
-    model     = 0
-    NSsites   = 0
-    CodonFreq = 3
-    estFreq   = 0
-    clock     = 0
-    fix_omega = 0
-    omega     = 1e-05
-```
 
 # Session info
 

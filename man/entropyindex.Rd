@@ -57,7 +57,7 @@
     on this function, while \code{\link{baseFrequency}}, \code{\link{CnCs}}
     and \code{\link{codonDissimilarity}} are useful for transforming genetic
     sequences into counts needed for the \code{countvector} input. Interested
-    users might consult the external \code{\link{vegan::diversity}} function
+    users might consult the external \code{vegan::diversity} function
     for alternative entropy estimation methods.
 }
 
@@ -72,6 +72,6 @@
 
 \examples{
     freqdata <- sample(seq(0,6), 20, replace=TRUE)
-    tested <- entropyindex(freqdata, 20)
+    tested <- entropyindex(freqdata, sum(freqdata))
     tested
 }

@@ -25,7 +25,8 @@ seqsat1 <- function(fastafile, wsize, wless1, weightmax){
     codonProps <- apply(nucProps, 2, n2cFreqs)
     codonLLmax <- apply(codoncounts, 2, siteLLmax, pimatrix=codonProps)
     nucLLmax <- apply(nucleotidecounts, 2, siteLLmax, pimatrix=nucProps)
-    meaNucID <- sapply(seq(1,3), function(i) seq(i,length(nucLLmax),by=3))
+    meaNucID <- vapply(seq(1,3), function(i) seq(i,length(nucLLmax),by=3),
+        FUN.VALUE=vector("numeric",length(nucLLmax)/3))
     nucLLsum <- apply(meaNucID, 1, function(i) sum(nucLLmax[i]))
     codonLLprob <- softmax(codonLLmax, TRUE)
     nucLLprob <- softmax(nucLLsum, TRUE)

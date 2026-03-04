@@ -25,7 +25,6 @@ setClass("saturateBF", representation(bf.pv="numeric",
 setClass("geneindex", representation(eindex="numeric", noinfo="numeric",
     meth="character", alphaR="numeric", nbases="numeric", synonym="logical"),
     prototype(alphaR=as.numeric(NA), synonym=as.logical(NA)))
-setClass("saturatePV", contains="saturateBF")
 
 # ><>< # Specify Generics
 setGeneric("bstringCodons",
@@ -49,7 +48,6 @@ setGeneric("sitecount", function(gent) standardGeneric("sitecount") )
 setGeneric("BFs", function(satube) standardGeneric("BFs") )
 setGeneric("LogL0", function(satube) standardGeneric("LogL0") )
 setGeneric("LogL1", function(satube) standardGeneric("LogL1") )
-setGeneric("PVs", function(satupe) standardGeneric("PVs") )
 
 # ><>< # Create Citation Function
 txt0 <- paste("Below is/are citation(s) relevant to the queeems package:")
@@ -66,7 +64,7 @@ br2 <- paste0("@Manual{,\n\t","title = {Saturation Threshold of Codon ",
     "Evolutionary Models},\n\t","author = {Hassan Sadiq},\n\t",
     "year = {in progress},\n\t", "note = {Preprint},\n}")
 citevect <- c(tr1, tr2, br1, br2)
-citeData <- matrix(citevect, nrow=length(citevect)%/%2, byrow=F)
+citeData <- matrix(citevect, nrow=length(citevect)%/%2, byrow=FALSE)
 
 aboutQueeems <- function(cite=NULL){
 citemsg <- paste0("Invalid citation index. There are ",

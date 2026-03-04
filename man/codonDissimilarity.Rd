@@ -20,7 +20,7 @@
 
 \details{
     The input \code{BStringSet} object can be created with the
-    \code{\link{Biostrings::readBStringSet}} function. \code{diffUnit}
+    \code{Biostrings::readBStringSet} function. \code{diffUnit}
     represents the number of nucleotide mismatches that is preferred. Let
     the unique codons at each genetic sequence alignment site be denoted
     as \code{i = 1, 2, ..., k}, where \code{k} can not be more than the

@@ -14,7 +14,7 @@ devtools::load_all( file.path(codePath, "R"))
 # library("queeems")
 
 # ><>< # Retrieve path to simulated tutorial data folder
-datadir <- system.file("vignettes/data/", package="queeems")
+datadir <- system.file("extdata/example/", package="queeems")
 
 # ><>< # Read merged molecular sequences data as text
 seqsname <- file.path(datadir, "tut_seqs.txt")
@@ -87,7 +87,7 @@ for(a0 in seq(1,nreps)){
     aasent[,a0] <- sitentropies(entamino)
 
     # ><>< # Provide analysis progress update
-    message("Completed analyses of data replicate ", sprintf("%02.0f",a0))
+    message("Completed analyses of data replicate ", a0)
 }
 
 # ><>< # Read dN/dS values from file
@@ -98,7 +98,8 @@ dndsvalues <- read.table(dndsfile, header=TRUE)
 mlefile <- file.path(datadir, "tut_mles.txt")
 mlevalues <- read.table(mlefile, header=TRUE)
 
-# ><>< # Obtain temporary storage of the saturation free sequences.
+# ><>< # Temporary storage of the saturation free sequences.
+# ><>< # Data was retrieved from where it is saved and analysed with PAML
 message("\nSequences that are rid of saturated sites",
     " may be retrieved from:\n\t", nosatpath, "\n")
 

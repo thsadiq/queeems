@@ -33,9 +33,9 @@ quality of molecular sequences for biological studies requires quantifying
 the degree of evolutionary signature retained in the data. Such an assessment
 is popularly done using the saturation (*H*) index introduced by @xia2002.
 The index is an extension of @shannon1948 information entropy and it is not
-robust to the evolutionary tree that must have generated the data. In general,
-a single H index is estimated for an alignment of protein sequences. The
-significance of the evolutionary information retained in the data is then
+always robust to the evolutionary tree that must have generated the data. In
+general, a single H index is estimated for an alignment of protein sequences.
+The significance of the evolutionary information retained in the data is then
 assessed with the Student's t hypothesis test that compares the estimated
 index to a pre-determined threshold. Xia's H index is an invaluable
 contribution to computational evolutionary biology studies. It is however
@@ -66,10 +66,7 @@ The molecular sequences analysed herein are generated with the `scoup`
 [@sadiq2024] package that allows genetic sequences to be simulated following
 a simplified Ornstein-Uhlenbeck (OU) process. A R file that contains the
 simulation code and a folder that contains the simulated data are available
-in the `vignettes/data/` folder as part of the `queeems` package. Results from
-analyses of an empirical `VertCOI.fasta` data from DAMBE [@xia2018] is also
-presented below. The data can also be accessed in the `inst/extdata/` folder
-of the `queeems` package.
+in the `inst/extdata/example/` folder as part of the `queeems` package.
 
 # Simulation Studies
 Genetic sequence alignments were generated on a balanced bifurcating
@@ -81,15 +78,16 @@ effect [@spielman2015] will be detected. Eight data replicates were
 generated. Other necessary `scoup` simulation parameters specified include:
 *number of codon sites = 250*, *OU reversion rate = 0.00*,
 *OU asymptotic variance = 0.00*, *OU asymptotic mean = 0.00*, *variance of
-non-synonymous selection coefficients = 0.50*. The data analysis was
-initiated with the following code.  
+non-synonymous selection coefficients = 0.50*. The saturation analysis of
+the simulated sequences was initiated with the following code that includes
+storage of necessary outputs.  
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 # ><>< # Load package into current R session
 library("queeems")
 
 # ><>< # Retrieve path to simulated tutorial data folder
-datadir <- system.file("extdata/example/", package="queeems")
+datadir <- system.file("extdata/example", package="queeems")
 
 # ><>< # Read merged molecular sequences data as text
 seqsname <- file.path(datadir, "tut_seqs.txt")
@@ -162,33 +160,107 @@ for(a0 in seq(1,nreps)){
     aasent[,a0] <- sitentropies(entamino)
 
     # ><>< # Provide analysis progress update
-    message("Completed analyses of data replicate ", sprintf("%02.0f",a0))
+    message("Completed analyses of data replicate ", a0)
 }
 ```
 
-Analytical estimates of the ratio of non-synonymous to synonymous substitution
-rates ($\mathrm{d}N/\mathrm{d}S$) are obtained from `scoup` where they are
-calculated using expressions from @spielman2015. The maximum likelihood
-estimates of the ratio ($\omega$) are obtained using PAML [@yang2007] and
-the control files used for the execution of the analyses are available in
-the `vignettes/data/` folder in the `queeems` package. The correlation
-between the entropy estimates and the Bayes factors demonstrate consistency
-of the overall inferences with the entropy-based technique used in DAMBE
-[@xia2018].
+A few statistics necessary to assess the accuracy of the outputs from
+`queeems` had to be obtained using other packages and applications. For
+example, analytical estimates of the ratio of non-synonymous to synonymous
+substitution rates ($\mathrm{d}N/\mathrm{d}S$) were obtained in `scoup`
+where they are calculated using expressions from @spielman2015. The
+corresponding maximum likelihood estimates of the ratio ($\omega$) were
+obtained using PAML [@yang2007]. The control files used for the execution of
+the PAML analyses are available in the `extdata/example/` folder in the
+`queeems` package. The following code is consequently necessary to read the
+$\mathrm{d}N/\mathrm{d}S$ and the $\omega$ estimates into the current session.
+```{r, eval=FALSE}
+# ><>< # Read dN/dS values from file
+dndsfile <- file.path(datadir, "tut_dnds.csv")
+dndsvalues <- read.table(dndsfile, header=TRUE)
 
-# Empirical Analyses
-The `VertCOI.fasta` data [@xia2018] contains mitochondrial COI sequences from
-eight vertebrates including: *Masturus lanceolatus* (sunfish), *Homo sapiens*
-(human), *Bos taurus* (cow), *Balaenotera musculus* (blue whale), *Pongo
-pygmaeus* (Bornean orangutan), *Pantroglodytes* (chimpanzee), *Gallus gallus*
-(chicken) and *Alligator mississippiensis* (American alligator) [@xia2009].
-Each sequence comprise 504 codon bases. The results obtained from analysing
-the data using DAMBE [@xia2018] (output screenshots are also available in
-the `vignettes/data/` folder) and `queeems` are summarised below.
+# ><>< # Read MLE of non-synonymous/synonymous substitution from file
+mlefile <- file.path(datadir, "tut_mles.txt")
+mlevalues <- read.table(mlefile, header=TRUE)
 
+# ><>< # Temporary storage of the saturation free sequences.
+# ><>< # Data was retrieved from where it is saved and analysed with PAML
+message("\nSequences that are rid of saturated sites",
+    " may be retrieved from:\n\t", nosatpath, "\n")
+
+# ><>< # Read MLE of substitution rate ratio for saturation-free sequences.
+# mle2file <- file.path(datadir, "tut_cleanmle.txt")
+# updatedMLE <- read.table(mle2file, header=TRUE)
+```
+
+Next, I interrogate the outputs from the analyses. I begin with the entropy
+estimates. Theoretically, full saturation occurs when the proability of
+observing a base is equal for all bases in the sample space. This corresponds
+to the case where the Shannon entropy is equal to $\log(1/n)$, where `n` is
+the size (`n`) of the respective sample space. That is, `n = 4` for
+nucleotide, `n = 61` for codon and `n = 20` for amino acid bases. The red
+dashed lines in the image below indicate the point of theoretical saturation
+and the thin lines represent the entropy density for each of the eight
+simulated genetic sequence replicate. The same data sets were used for all
+the three plots. As expected, nucleotide entropy estimates are potentially
+closest to saturation and the codon estimates are furthest. In other words,
+`n` can be loosely said to be proportional to the capacity to retain genetic
+information.
+
+```{r, eval=FALSE}
+# ><>< # Generate distributions of entropy estimates
+par(fig=c(0, 0.36, 0, 1), mar=c(4.2,4.2,0.2,0))
+    plot(0, 0, col="white", bty="n", xlab="", ylab="",
+        xlim=c(0,1.4), ylim=c(0.04,1.2), xaxt="n", yaxt="n")
+    axis(1, tck=-0.035, lwd=2, padj=-.5, cex.axis=1.2)
+    axis(2, las=1, tck=-0.035, lwd=2, cex.axis=1.2, hadj=0.7)
+    a1 <- apply(nucent, 2, function(i) lines(density(i), lwd=.5, col="grey60"))
+    lines(rep(-log(1/4),2), c(-0.1,1.3), lwd=2, lty=2, col="tomato")
+    mtext("Nuc. Entropy", 1, 2.2, cex=1.3)
+    mtext("Density", 2, 2.4, cex=1.3)
+    box(lwd=2)
+par(fig=c(0.36, 0.68, 0, 1), mar=c(4.2,0,0.2,0), new=TRUE)
+    plot(0, 0, col="white", bty="n", xlab="", ylab="",
+        xlim=c(0,4.2), ylim=c(0.04,1.2), xaxt="n", yaxt="n")
+    axis(1, tck=-0.035, lwd=2, padj=-.5, cex.axis=1.2)
+    a1 <- apply(codent, 2, function(i) lines(density(i), lwd=.5, col="grey60"))
+    lines(rep(-log(1/61),2), c(-0.1,1.3), lwd=2, lty=2, col="tomato")
+    mtext("Codon Entropy", 1, 2.2, cex=1.3)
+    box(lwd=2)
+par(fig=c(0.68, 1, 0, 1), mar=c(4.2,0,0.2,0.2), new=TRUE)
+    plot(0, 0, col="white", bty="n", xlab="", ylab="",
+        xlim=c(0,3.1), ylim=c(0.04,1.2), xaxt="n", yaxt="n")
+    axis(1, tck=-0.035, lwd=2, padj=-.5, cex.axis=1.2)
+    a1 <- apply(aasent, 2, function(i) lines(density(i), lwd=.5, col="grey60"))
+    lines(rep(-log(1/20),2), c(-0.1,1.3), lwd=2, lty=2, col="tomato")
+    mtext("Amino Acid Entropy", 1, 2.2, cex=1.3)
+    box(lwd=2)
+```
+
+The more useful practical saturation thresholds should be values less than
+the theoretical values [@xia2002]. Figure A below shows estimates of
+$\log(\omega)$ (filled circles) and $\log(\mathrm{d}N/\mathrm{d}S)$
+(open squares) for each of the data replicates. The table below contains
+summaries of the saturation analyses of the data sets. It can be observed
+that half (= 4/8) of the $\omega$ estimates are significantly inflated.
+In line with the identical setting used to generate the sequences, `queeems`
+detected saturated sites for all the replicates. The package also correctly
+inferred #### `???%` (= `???/4`) of the sequences that produced the inflated
+$\omega$ estimates to be saturated for purposes of natural selection analyses.
+#### Figure B shows comparison of $\omega$ estimates from the saturated and
+the non-saturated subsets for each of the eight replicates. The comparison
+shows that `queeems` can only improve inferences of the magnitude of natural
+selection effect. The summary table also contains the maximum substitution
+saturation indices ($\mathrm{I}_{ss}$) inferred with DAMBE. Given that none
+of the estimated DAMBE indices are greater than the minimum critical
+$\mathrm{I}_{ss}$ (because, $\min(\mathrm{I}_{ss.c}) = 0.81$), the
+simulated data sets may still be able to reproduce the balanced phylogeny
+they were simulated from. This emphasises the need for a genetic saturation
+assessment tool like `queeems` that is designed to improve natural selection
+inferences.
 ```{r, eval=TRUE}
-# Analyse data with queeems
-# Generate nice summary plots
+a <- 1
+plot(0,0)
 ```
 
 ---
@@ -197,31 +269,12 @@ the `vignettes/data/` folder) and `queeems` are summarised below.
 |Invariant sites prop.|0.0000  |Invariant sites prop.|a       |
 |Mean H               |0.4457  |Saturated sires      |a       |
 |Std. error of H      |0.0148  |Overall Bayes factor |a       |
-|Iss                  |0.2698  |Overall decision     |a       |
-|Iss.c (symmetric)    |0.8093  |Overall decision     |Not sat.|
+|Iss                  |0.2698  |Overall decision     |Not sat.|
+|Iss.c (symmetric)    |0.8093  |                     |        |
 |Iss.c (asymmetric)   |0.7095  |                     |        |
 |Overall decision     |Not sat.|                     |        |
 Table: Comparative saturation analyses outputs that demonstrate the
 effectiveness of the inference functions in `queeems`.
-
-Inferences from DAMBE show that the data is not saturated given that, for
-both the symmetrical and asymmetrical trees respectively, the critical
-saturation index (`Iss.c = 0.8093 & 0.7095`) is greater than the saturation
-index (`Iss = 0.2698`) estimated for the data. This inference is the same as
-the overall inference obtained with the Bayesian approach with `queeems`. In
-addition, `queems` made it possible to identify sites `...`as saturated sites.
-In fact, excluding the identified sites `increased/reduced` the value of the
-homogeneous maximum likelihood estimate of the ratio of non-synonymous
-to synonymous substitution rate ($\omega$) from ... to .....
-
-Entropy estimates are not directly used as the primary saturation inference
-measures in `queeems`, unlike in DAMBE [@xia2018]. There are however functions
-in `queeems` that can be used to obtain different entropy estimates with
-respect to molecular data. For example, Figure 1 below illustrates ....
-```{r, eval=TRUE}
-# Analyse data with queeems
-# Generate nice summary plots
-```
 
 # Conclusion
 I demonstrated that, compared to the popular existing software for analysing
@@ -230,10 +283,10 @@ more easily identify the codon sites contributing to overall protein sequence
 saturation. I further showed that such knowledge may lead to improved estimate
 of the magnitude of the natural selection pressure obtained from such protein
 data. The choice of the weight parameters (`size = 6`, `proportion < 1 =
-0.4`, `maximum = 7`) used during the `queeems` analyses presented here is
-arbitrary. A study about the sensitivity of the parameters to the inferences
-obtained is ongoing and intended to be submitted for publication upon
-completion.
+0.4`, `maximum = 7`) and the tolerance for saturation sites (`piSS = 0.40`)
+that are used for the `queeems` analyses presented here is arbitrary. A study
+about the sensitivity of the parameters to the inferences obtained is ongoing
+and intended to be submitted for publication upon completion.
 
 # Citation
 A more appropriate citation will be provided for the package in due course.

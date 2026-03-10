@@ -21,7 +21,8 @@ setClass("cncsframe", representation(nscensus="integer", wildseq="array",
 setClass("siteindices", representation(eindices="numeric", noinfo="numeric",
     meth="character", alphaR="numeric"))
 setClass("saturateBF", representation(bf.pv="numeric",
-    nuLL="numeric", altLL="numeric", noInfo="numeric", nsites="numeric"))
+    nuLL="numeric", altLL="numeric", noInfo="numeric",
+    nsites="numeric", bfcutoff="numeric", sspi="numeric"))
 setClass("geneindex", representation(eindex="numeric", noinfo="numeric",
     meth="character", alphaR="numeric", nbases="numeric", synonym="logical"),
     prototype(alphaR=as.numeric(NA), synonym=as.logical(NA)))
@@ -48,27 +49,29 @@ setGeneric("sitecount", function(gent) standardGeneric("sitecount") )
 setGeneric("BFs", function(satube) standardGeneric("BFs") )
 setGeneric("LogL0", function(satube) standardGeneric("LogL0") )
 setGeneric("LogL1", function(satube) standardGeneric("LogL1") )
+setGeneric("mainPi", function(satube) standardGeneric("mainPi") )
+setGeneric("BFthreshold", function(satube) standardGeneric("BFthreshold") )
 
 # ><>< # Create Citation Function
 txt0 <- paste("Below is/are citation(s) relevant to the queeems package:")
 txt1 <- paste("The corresponding BibTeX entry(ies) is/are as follows:")
 tr1 <- paste0("Sadiq, H. (in progress). queeems: Quantify the Extent ",
     "of Evolutionary Evidence in Molecular Sequences. R package.")
-tr2 <- paste0("Sadiq, H. (in progress). Saturation ",
-    "Threshold of Codon Evolutionary Models. Preprint.")
+tr2 <- paste0("Sadiq, H. (in progress). Bayesian Approach",
+    " to Assessing Molecular Saturation. Preprint.")
 br1 <- paste0("@Manual{,\n\t","title = {queeems: Quantify the Extent ",
     "of Evolutionary Evidence in Molecular Sequences},\n\t","author =",
     " {Hassan Sadiq},\n\tyear = {in progress},\n\t", "note = {R",
     " Package},\n\turl = {https://github.com/thsadiq/queeems},\n}")
-br2 <- paste0("@Manual{,\n\t","title = {Saturation Threshold of Codon ",
-    "Evolutionary Models},\n\t","author = {Hassan Sadiq},\n\t",
+br2 <- paste0("@Manual{,\n\t","title = {Bayesian Approach to Assessing ",
+    "Molecular Saturation},\n\t","author = {Hassan Sadiq},\n\t",
     "year = {in progress},\n\t", "note = {Preprint},\n}")
 citevect <- c(tr1, tr2, br1, br2)
 citeData <- matrix(citevect, nrow=length(citevect)%/%2, byrow=FALSE)
 
 aboutQueeems <- function(cite=NULL){
-citemsg <- paste0("Invalid citation index. There are ",
-    nrow(citeData), " available queeems-related references.")
+    citemsg <- paste0("Invalid citation index. There are ",
+        nrow(citeData), " available queeems-related references.")
     input <- ifelse(is(cite,"NULL"), TRUE, cite %in% seq(1,nrow(citeData)))
     if(!input) stop( citemsg )
     if( is(cite,"NULL") ){

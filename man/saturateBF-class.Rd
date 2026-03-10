@@ -6,9 +6,11 @@
 \alias{show, saturateBF-method}
 \alias{LogL0, saturateBF-method}
 \alias{LogL1, saturateBF-method}
+\alias{mainPi, saturateBF-method}
 \alias{summary, saturateBF-method}
 \alias{sitecount, saturateBF-method}
 \alias{nonvaries, saturateBF-method}
+\alias{BFthreshold, saturateBF-method}
 
 \title{Substitution Saturation Output: Bayesian Paradigm}
 
@@ -34,6 +36,10 @@
             that are observed to be invariant.}
         \item{\code{nsites}:}{number of base sites that make up the original
             molecular data.}
+        \item{\code{bfcutoff}:}{Bayes factor threshold for determining
+            significance.}
+        \item{\code{sspi}:}{tolerated proportion of saturated sites to use
+            for overall hypotheses statements.}
     }
 }
 
@@ -58,6 +64,11 @@
         \item{LogL1:}{\code{signature(satube="saturateBF")} log-likelihood
             estimates for each data site as obtained from application of the
             parameters of the alternative hypothesis.}
+        \item{mainPi:}{\code{signature(satube="saturateBF")} a positive
+            fraction that specifies the value to use when conducting
+            hypotheses tests for overall saturation.}
+        \item{BFthreshold:}{\code{signature(satube="saturateBF")} Bayes
+            factor threshold value that determines when to infer saturation.}
     }
 }
 

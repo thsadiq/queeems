@@ -1,6 +1,6 @@
 # Introduction
 Thank you for considering contributing to the `queeems` molecular sequence
-exploratory R (and prospective Bioconductor) package. Your input will
+exploratory R (and Bioconductor) package. Your input will
 definitely be treated with great importance.
 
 # Proposing an update

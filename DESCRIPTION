@@ -11,7 +11,7 @@ Description: Biological inferences obtained from molecular data are only as
     data. Techniques available to quantify these signatures are largely
     targeted towards phylogeny reconstruction and they often rely on adhoc
     hypothesis tests of significance. I present a Bayesian function that
-    assesses whether a set of protein sequences are saturated. That is, it
+    assesses whether a set of genetic sequences are saturated. That is, it
     is useful for determining whether the evolutionary information in the
     sequences has eroded with time. Site specific Bayes factors are generated
     with respect to codon bases to allow for straightforward applications in
@@ -23,12 +23,11 @@ Suggests: BiocManager, BiocStyle, bookdown, htmltools, knitr,
           testthat (>= 3.0.0), vegan, yaml
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-biocViews: Alignment, Classification, ComparativeGenomics, DataImport,
-           Genetics, MathematicalBiology, ResearchField, Sequencing,
-           SequenceMatching, Software, StatisticalMethod, WorkflowStep,
-           Bayesian
+biocViews: Alignment, Bayesian, Classification, DataImport, Genetics,
+            MathematicalBiology, ResearchField, Sequencing, SequenceMatching,
+            Software, StatisticalMethod, WorkflowStep,
 Contact: <hassan.t.sadiq@gmail.com>
 URL: https://github.com/thsadiq/queeems
 BugReports: https://github.com/thsadiq/queeems/issues
-Packaged: 2026-02-28 23:59:59 UTC; hassan
+Packaged: 2026-03-13 23:59:59 UTC; hassan
 Repository: Bioconductor

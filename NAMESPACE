@@ -53,6 +53,8 @@ exportMethods(
     sitecount,
     BFs,
     LogL0,
-    LogL1
+    LogL1,
+    mainPi,
+    BFthreshold
 )
 

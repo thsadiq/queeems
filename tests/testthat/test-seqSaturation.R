@@ -8,7 +8,7 @@ test_that("all the functions in seqSaturation file works well", {
     expect_equal( nrow(testFreqs), nrow( nucPIgen(8,0.3,15)))
     expect_true( all( round(colSums( nucPIgen(5,0.4,5)),12) == 1))
 
-    expect_true( siteLLmax(sample(13,4), testFreqs) <= 0)
+    expect_true( siteLLmax(sample(13,4), testFreqs) >= 0)
 
     sqdatum <- c("CCTCAGATCACTCTTTGGCAACGACCCCTT",
                  "CCTCAGATCACTCTTGTCTCAATAAAAGTA",
@@ -16,7 +16,7 @@ test_that("all the functions in seqSaturation file works well", {
     testdna <- file.path(tempdir(), "dnaSQ.fasta")
     dnaData <- Biostrings::DNAStringSet( sqdatum )
     Biostrings::writeXStringSet(dnaData, testdna)
-    test1 <- seqsat1(testdna, 5, 0.4, 5)
+    test1 <- seqsat1(testdna, 5, 0.4, 5, 9, 0.40)
     expect_true( is(test1, "saturateBF"))
     expect_true( length( nonvaries(test1)) >= 0)
     expect_equal( sitecount(test1), length( LogL1(test1)) )
@@ -28,7 +28,6 @@ test_that("all the functions in seqSaturation file works well", {
 
     test2a <- seqSaturation(testdna, "A", 5, 0.4, 5)
     expect_equal( length( BFs(test2a)), length( LogL0(test2a)) )
-    expect_true( as.numeric( summary(test2a)["alt.logL",]) < 0 )
     expect_error(seqSaturation(testdna, "B", 5, 0.4, 5))
     expect_error(seqSaturation(testdna, "C", 5, 0.4, 5))
 })

@@ -8,7 +8,8 @@
 }
 
 \usage{
-    seqSaturation(fastafile, approach, wsize, wless1, weightmax)
+    seqSaturation(fastafile, approach, wsize, wless1,
+        weightmax, bfcutoff=10, sspi=0.10)
 }
 
 \arguments{
@@ -19,13 +20,15 @@
     \item{wsize}{number of \eqn{\pi} parameter weight classes.}
     \item{wless1}{fraction of \eqn{\pi} weight classes to be less than one.}
     \item{weightmax}{maximum \eqn{\pi} weight value.}
+    \item{bfcutoff}{Bayes factor cutoff.}
+    \item{sspi}{tolerated proportion of saturated sites, overall.}
 }
 
 \details{
     At least, three molecular saturation verification techniques are planned
     to be incorporated into the package. However, only one is currently
-    accessible through the \code{seqSaturation} function. The logic behind the
-    technique is presented below.
+    accessible through the \code{seqSaturation} function. The logic behind
+    the technique is presented below.
     \itemize{
         \item \bold{Technique 1 (\code{approach = "A"}):}
         \itemize{
@@ -42,19 +45,21 @@
                 contained in codon data is significantly \bold{more} than the
                 information retrievable from associated nucleotide data. That
                 is, sequence is \bold{not} saturated. (\bold{\code{Bayes
-                Factor}} \eqn{\leq} \bold{\code{100}}).
+                Factor}} \eqn{\leq} \bold{\eqn{\code{BF}_\code{cutoff}}}).
             \item \emph{Alternative hypothesis (\code{H1})}: Evolutionary
                 information retrievable in the codon data is significantly
                 eroded or insufficient for evolutionary analyses, such that
                 nucleotide models reveal more about the data. That is,
-                sequence is saturated. \bold{\code{(Bayes Factor > 100).}}
+                sequence is saturated. (\bold{\code{Bayes Factor}} \eqn{>}
+                \bold{\eqn{\code{BF}_\code{cutoff}}}).
 
-            To verify these hypotheses, it is assumed that the number of
-            nucleotide and codon bases observed at each of the corresponding
-            positions of protein data follows a multinomial distribution. Bayes
-            factors are then estimated independently for each codon site,
-            \code{i = (1, 2, ..., n)}, as the ratio of maximum posterior
-            log-likelihoods as follows.
+            \eqn{\code{BF}_\code{cutoff}} is the input \code{bfcutoff}. To
+            verify these hypotheses, it is assumed that the number of codon
+            and nucleotide bases observed at each of the corresponding
+            positions of protein data follows a multinomial distribution.
+            Bayes factors are then estimated independently for each codon
+            site, \code{i = (1, 2, ..., n)}, as the ratio of maximum
+            posterior log-likelihoods as follows.
             \deqn{
                 \code{BF}_{i} = \frac{LogL\big(X_{\star i}^{(k)} |
                         \boldsymbol{\pi}_{\star i}^{(k)}\big)}
@@ -101,44 +106,52 @@
             associated nucleotide triplets as it is conventionally implemented
             in the \code{F3x4} substitution models.
 
-            Observe that the log-likelihood expressions are similar to that
-            of the Shannon index for quantifying information entropy. That
-            is in line with the hypotheses statements. Also observe that the
+            The log-likelihood expressions are similar to the popular Shannon
+            information entropy expression. The similarity justifies why it
+            is not inappropriate to have constructed the hypotheses statements
+            in terms of the information that can be retrieved. Note that the
             log-lilihood estimates will always be negative for both the
-            numerator and denominator of the Bayes factor expression, because
+            numerator and denominator of the Bayes factor formula, because
             the \code{x, y} counts are strictly non-negative and the
-            theoretical proportions are always fractions. Therefore, to avoid
-            spurious outcomes, the log-likelihood estimates were transformed
-            into approximate posterior probabilities using the
-            \code{\link{softmax}} identity before maximising.
+            theoretical proportions (\eqn{\pi}) are always fractions.
+            Consequently, to avoid spurious outcomes, the log-likelihood
+            estimates were transformed into approximate posterior
+            probabilities using the \code{\link{softmax}} identity before
+            maximising.
 
             A single Bayes factor is also estimated to assess the overall
-            extent of saturation of the protein sequence data, as the ratio of
-            the sum of the site log-likelihoods as follows.
+            extent of saturation of the protein sequence data (Y). Separate
+            hypotheses statements about the true proportion of saturated
+            sites (\eqn{\rho}), were necessary for this purpose. These
+            hypotheses may be expressed as follows.
             \deqn{
-                \code{BF} = \frac{\bigg(\displaystyle{\sum_{i=1}^{n}}
-                    LogL\big(X_{\star i}^{(k)} |
-                        \boldsymbol{\pi}_{\star i}^{(k)}\big) \bigg)^{-1}}
-                        {\bigg(\displaystyle{\sum_{i=1}^{n}}
-                    LogL\big(Y_{\star i} |
-                        \boldsymbol{\pi}_{\star i}^{\code{cdn}} \big)
-                        \bigg)^{-1}}
+                \code{H}_{0}:  \rho \leq \rho_{0}^{} \\
+                \code{H}_{1}:  \rho > \rho_{0}^{},
             }
 
-            The inverse is necessary because the log-likelihood estimates are
-            always negative. For both the site-wise and global assessments,
-            saturation is inferred if the corresponding Bayes factor estimate
-            is greater than 100.
+            where \eqn{\rho} is the parameter of the \code{Binomial}(\code{n},
+            \eqn{\rho}) distribution, \code{n} = the number of codon sites and
+            \eqn{\rho_{0}} is the input \code{sspi} (default \code{0.10}).
+            Similar to the approach taken for the site-wise inferences,
+            potential \eqn{\rho \in (0,1)} values are obtained using the
+            FUBAR discretisation method. A Bayes factor is then estimated
+            as the ratio of the maximum posterior probabilities as follows.
+            \deqn{
+                \code{BF}_{\code{overall}} = \frac{L \left(Y \big| \rho >
+                    \rho_{0}^{} \right)}{L \left(Y \big| \rho \leq
+                    \rho_{0}^{}\right)}.
+            }
+
         }
     }
 }
 
 \value{
     The output object returned is determined by the analyses technique.
-    Additional techniques are should be incorporated soon. Bayesian outputs
+    Additional techniques should be incorporated soon. Bayesian outputs
     from \code{Technique 1} is returned as a \code{\link{saturateBF}} object.
     The object contains details of the site-wise likelihood estimates and
-    other useful characteristic information. The respective function help
+    other useful characteristic information. The respective object help
     file may be consulted for further details.
 }
 

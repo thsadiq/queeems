@@ -36,14 +36,28 @@ library(scoup)
 # Number of tree leaves
 leaves <- 64
 
+# Number of codon sites
+sitesize <- 100
+
+# Number of data replications for each tree length
+sims <- 5
+
+# Branch length
+blent <- seq(0.03, 0.15, 0.03)
+btags <- sprintf("%02.0f", blent*100)
+
+# Non-synonymous variance value
+nsynvary <- 0.25
+
+# Synonymous variance value
+synvary <- 0.01
+
 # Effective population size
 effpop <- 1000
 
-# Number of codon sites
-sitesize <- 250
-
-# Number of data replications for each tree length
-sims <- 8
+# OU landscape shift parameters
+newvnvs <- ifelse(synvary == 0, 0, nsynvary/synvary)
+hbrunoStat <- hbInput(c(vNvS=newvnvs, nsynVar=nsynvary, Ne=effpop))
 
 # OU reversion parameter (Theta) value
 eThta <- 0.0
@@ -51,48 +65,37 @@ eThta <- 0.0
 # OU asymptotic variance value
 eVary <- 0.0
 
-# Non-synonymous variance value
-nsynvary <- 0.50
-
-# Synonymous variance value
-synvary <- 0.01
-
-# Branch length
-blent <- 0.10
-
-# Specify data storage paths
-pryPath <- tempdir()
-
-# Create storage for dN/dS estimates
-dndsPath <- file.path(pryPath, "dnds.csv")
-dndsarray <- matrix(NA, ncol=1, nrow=sims, dimnames=list(NULL,"dnds"))
-
-# Save the evolutionary tree used for the simulation
-t3newick <- biTree(leaves, blent)
-t3Path <- file.path(pryPath, "tree.txt")
-write.table(t3newick, t3Path, FALSE, FALSE, row.names=FALSE, col.names=FALSE)
-
-# OU landscape shift parameters
-newvnvs <- ifelse(synvary == 0, 0, nsynvary/synvary)
-hbrunoStat <- hbInput(c(vNvS=newvnvs, nsynVar=nsynvary, Ne=effpop))
-
 # Create appropriate simulation function ("ou") object
 adaptStat <- ouInput(c(eVar=eVary,Theta=eThta))
 
-# Create sequence file
-seqPath <- file.path(pryPath, "seqs.txt")
+# Specify data storage paths
+pryPath <- "stemL" # tempdir()
 
-# Sequence alignment size information
-seqStat <- seqDetails(c(nsite=sitesize, ntaxa=leaves, blength=blent))
+# Create storage for dN/dS estimates
+dndsPath <- file.path(pryPath, "dnds.csv")
+dndsarray <- matrix(NA,ncol=length(blent),nrow=sims,dimnames=list(NULL,btags))
 
-# Iterate over the specified number of replicates
-for(i in seq(1,sims)){ 
+for(h in seq(1,length(blent))){
+    # Save the evolutionary tree used for the simulation
+    t3newick <- biTree(leaves, blent[h])
+    t3Path <- file.path(pryPath, paste0("tree", btags[h],".txt"))
+    write.table(t3newick,t3Path,FALSE,FALSE,row.names=FALSE,col.names=FALSE)
 
-    # Execute simulation
-    simData <- alignsim(adaptStat, seqStat, hbrunoStat, NA)
-    dndsavg <- mergeseq(simData, i, seqPath)
-    dndsarray[i,] <- dndsavg
-    message("Generated sequences for replicate ", sprintf("%02.0f",i))
+    # Create sequence file
+    seqPath <- file.path(pryPath, paste0("gdata", btags[h],".txt"))
+
+    # Sequence alignment size information
+    seqStat <- seqDetails(c(nsite=sitesize, ntaxa=leaves, blength=blent[h]))
+
+    # Iterate over the specified number of replicates
+    for(i in seq(1,sims)){ 
+
+        # Execute simulation
+        simData <- alignsim(adaptStat, seqStat, hbrunoStat, NA)
+        dndsavg <- mergeseq(simData, i, seqPath)
+        dndsarray[i,h] <- dndsavg
+    }
+    message("Generated sequences for stem length ", sprintf("%.02f",blent[h]))
 }
 write.table(dndsarray, dndsPath, FALSE, FALSE, ";", row.names=FALSE)
 message("\nscoup simulation completed and outputs",

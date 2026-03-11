@@ -113,7 +113,6 @@ tfunc <- function(i, pty, clr, cx, mat, agl=90){
     return(0)
 }
 
-
 # ><>< # Summarise overall Bayes factor values
 bfsumm <- apply(homoBF,2,infoests)
 

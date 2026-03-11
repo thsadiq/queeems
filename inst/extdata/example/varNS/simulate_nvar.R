@@ -43,21 +43,13 @@ sitesize <- 100
 sims <- 5
 
 # Branch length
-blent <- seq(0.03, 0.15, 0.03)
-btags <- sprintf("%02.0f", blent*100)
-
-# Non-synonymous variance value
-nsynvary <- 0.25
+blent <- 0.10
 
 # Synonymous variance value
 synvary <- 0.01
 
 # Effective population size
 effpop <- 1000
-
-# OU landscape shift parameters
-newvnvs <- ifelse(synvary == 0, 0, nsynvary/synvary)
-hbrunoStat <- hbInput(c(vNvS=newvnvs, nsynVar=nsynvary, Ne=effpop))
 
 # OU reversion parameter (Theta) value
 eThta <- 0.0
@@ -68,24 +60,28 @@ eVary <- 0.0
 # Create appropriate simulation function ("ou") object
 adaptStat <- ouInput(c(eVar=eVary,Theta=eThta))
 
+# Sequence alignment size information
+seqStat <- seqDetails(c(nsite=sitesize, ntaxa=leaves, blength=blent))
+
 # Specify data storage paths
-pryPath <- "stemL" # tempdir()
+pryPath <- tempdir()
+
+# Non-synonymous variance value
+nsvary <- seq(1, 5) / 10
+ntags <- sprintf("%.0f", nsvary*10)
 
 # Create storage for dN/dS estimates
 dndsPath <- file.path(pryPath, "dnds.csv")
-dndsarray <- matrix(NA,ncol=length(blent),nrow=sims,dimnames=list(NULL,btags))
+dndsarray <- matrix(NA, ncol=length(nsvary),
+        nrow=sims, dimnames=list(NULL,paste0("ns0",ntags)))
 
-for(h in seq(1,length(blent))){
-    # Save the evolutionary tree used for the simulation
-    t3newick <- biTree(leaves, blent[h])
-    t3Path <- file.path(pryPath, paste0("tree", btags[h],".txt"))
-    write.table(t3newick,t3Path,FALSE,FALSE,row.names=FALSE,col.names=FALSE)
+for(h in seq(1,length(nsvary))){
+    # OU landscape shift parameters
+    newvnvs <- ifelse(synvary == 0, 0, nsvary[h]/synvary)
+    hbrunoStat <- hbInput(c(vNvS=newvnvs, nsynVar=nsvary[h], Ne=effpop))
 
     # Create sequence file
-    seqPath <- file.path(pryPath, paste0("gdata", btags[h],".txt"))
-
-    # Sequence alignment size information
-    seqStat <- seqDetails(c(nsite=sitesize, ntaxa=leaves, blength=blent[h]))
+    seqPath <- file.path(pryPath, paste0("gdata", ntags[h],".txt"))
 
     # Iterate over the specified number of replicates
     for(i in seq(1,sims)){ 
@@ -95,7 +91,7 @@ for(h in seq(1,length(blent))){
         dndsavg <- mergeseq(simData, i, seqPath)
         dndsarray[i,h] <- dndsavg
     }
-    message("Generated sequences for stem length ", sprintf("%.02f",blent[h]))
+    message("Generated sequences for \U03c3\U00b2 = 0.", ntags[h])
 }
 write.table(dndsarray, dndsPath, FALSE, FALSE, ";", row.names=FALSE)
 message("\nscoup simulation completed and outputs",

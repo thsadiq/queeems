@@ -69,7 +69,7 @@ eVary <- 0.0
 adaptStat <- ouInput(c(eVar=eVary,Theta=eThta))
 
 # Specify data storage paths
-pryPath <- "stemL" # tempdir()
+pryPath <- tempdir()
 
 # Create storage for dN/dS estimates
 dndsarray <- matrix(NA,ncol=length(blent),nrow=sims,dimnames=list(NULL,btags))

@@ -1,6 +1,6 @@
 Package: queeems
 Version: 0.99.0
-Date: 2025-03-15
+Date: 2025-03-11
 License: GPL-3 + file LICENSE
 Authors@R: c(person("Hassan", "Sadiq", role=c("aut","cre","cph"),
                     email="hassan.t.sadiq@gmail.com",
@@ -29,5 +29,5 @@ biocViews: Alignment, Bayesian, Classification, DataImport, Genetics,
 Contact: <hassan.t.sadiq@gmail.com>
 URL: https://github.com/thsadiq/queeems
 BugReports: https://github.com/thsadiq/queeems/issues
-Packaged: 2026-03-13 23:59:59 UTC; hassan
+Packaged: 2026-03-11 11:00:00 UTC; hassan
 Repository: Bioconductor

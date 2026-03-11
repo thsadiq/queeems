@@ -3,6 +3,7 @@ Sadiq, H. (2026), "queeems: Quantify the Extent of Evolutionary Evidence in
 
 This file documents package changes since first submission on Bioconductor.
 
-0.99.0 (2026-03-15): First Submitted Version
+0.99.0 (2026-03-11): First Submitted Version
++ Pushed first fully functional version to Git.
 + Submitted on Bioconductor for review.
 

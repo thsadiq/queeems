@@ -30,9 +30,11 @@
     files all contain empirical HIV-1 protein sequences that were retrieved
     from Murrell et al. (2012). Other files accessible from the folder
     include the \code{VertCOI.fasta}: mitochondrial COI sequences from
-    eight vertebrates (Xia, 2018). The \code{filename} input may be
-    specified as any of the listed filnames or left as the default
-    \code{NULL} value. 
+    eight vertebrates (Xia, 2018) and \code{InvertebrateEF1a.fasta}:
+    elongation factor-1a sequences from chelicerate, myriapod,
+    branchipod, hexapod, molluscan, annelid and malacostracan species. The
+    \code{filename} input may be specified as any of the listed filnames or
+    left as the default \code{NULL} value. 
     
     The reverse transcriptase isolates [\code{RTI.fasta}] contain 205 codon
     sites and 476 sequences. Following Murrell et al. (2012), this corresponds

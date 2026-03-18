@@ -1,5 +1,5 @@
 Package: queeems
-Version: 0.99.1
+Version: 0.99.2
 Date: 2025-03-18
 License: GPL-3 + file LICENSE
 Authors@R: c(person("Hassan", "Sadiq", role=c("aut","cre","cph","fnd"),

@@ -8,9 +8,8 @@ citEntry(entry = "manual",
         year = "2026",
         volume = "",
         pages = "",
-        url = "https://github.com/thsadiq/queeems",
+        doi = "10.18129/B9.bioc.queeems",
         textVersion = 
         paste("Sadiq, H. (2026)",
               "queeems: Quantify the Extent of Evolutionary Evidence
-              in Molecular Sequences", "R Package Version 0.99", "url:
-              https://github.com/thsadiq/queeems"))
+              in Molecular Sequences", "R Package Version 0.99"))

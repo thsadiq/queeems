@@ -2,12 +2,17 @@
 \docType{class}
 \alias{cncsframe}
 \alias{cncsframe-class}
-\alias{show, cncsframe-method}
-\alias{nORs, cncsframe-method}
-\alias{nsfreqs, cncsframe-method}
-\alias{nonvaries, cncsframe-method}
-\alias{nucbalance, cncsframe-method}
-\alias{wildtriplets, cncsframe-method}
+\alias{nORs}
+\alias{nsfreqs}
+\alias{nonvaries}
+\alias{nucbalance}
+\alias{wildtriplets}
+\alias{show,cncsframe-method}
+\alias{nORs,cncsframe-method}
+\alias{nsfreqs,cncsframe-method}
+\alias{nonvaries,cncsframe-method}
+\alias{nucbalance,cncsframe-method}
+\alias{wildtriplets,cncsframe-method}
 
 \title{Synonymous and Non-Synonymous Frequencies}
 

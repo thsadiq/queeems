@@ -1,6 +1,7 @@
 \name{bstringCodons}
 \alias{bstringCodons}
 \alias{bstringCodons.BStringSet}
+\alias{bstringCodons,BStringSet-method}
 
 \title{Convert a BStringSet Object to Codon Sequences}
 

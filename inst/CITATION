@@ -8,7 +8,6 @@ citEntry(entry = "manual",
         year = "2026",
         volume = "",
         pages = "",
-        doi = "",
         url = "https://github.com/thsadiq/queeems",
         textVersion = 
         paste("Sadiq, H. (2026)",

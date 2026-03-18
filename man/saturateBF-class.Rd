@@ -2,15 +2,20 @@
 \docType{class}
 \alias{saturateBF}
 \alias{saturateBF-class}
-\alias{BFs, saturateBF-method}
-\alias{show, saturateBF-method}
-\alias{LogL0, saturateBF-method}
-\alias{LogL1, saturateBF-method}
-\alias{mainPi, saturateBF-method}
-\alias{summary, saturateBF-method}
-\alias{sitecount, saturateBF-method}
-\alias{nonvaries, saturateBF-method}
-\alias{BFthreshold, saturateBF-method}
+\alias{BFs}
+\alias{LogL0}
+\alias{LogL1}
+\alias{mainPi}
+\alias{BFthreshold}
+\alias{BFs,saturateBF-method}
+\alias{show,saturateBF-method}
+\alias{LogL0,saturateBF-method}
+\alias{LogL1,saturateBF-method}
+\alias{mainPi,saturateBF-method}
+\alias{summary,saturateBF-method}
+\alias{sitecount,saturateBF-method}
+\alias{nonvaries,saturateBF-method}
+\alias{BFthreshold,saturateBF-method}
 
 \title{Substitution Saturation Output: Bayesian Paradigm}
 

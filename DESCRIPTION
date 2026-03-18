@@ -1,8 +1,8 @@
 Package: queeems
-Version: 0.99.0
-Date: 2025-03-11
+Version: 0.99.1
+Date: 2025-03-18
 License: GPL-3 + file LICENSE
-Authors@R: c(person("Hassan", "Sadiq", role=c("aut","cre","cph"),
+Authors@R: c(person("Hassan", "Sadiq", role=c("aut","cre","cph","fnd"),
                     email="hassan.t.sadiq@gmail.com",
                     comment=c(ORCID="0000-0003-0192-7134")))
 Title: Quantify the Extent of Evolutionary Evidence in Molecular Sequences
@@ -17,7 +17,7 @@ Description: Biological inferences obtained from molecular data are only as
     with respect to codon bases to allow for straightforward applications in
     extensive computational biology inquiries, including natural selection
     analyses.
-Depends: R (>= 4.5), gtools, Matrix, Biostrings, stats
+Depends: R (>= 4.6.0), gtools, Matrix, Biostrings, stats
 Imports: methods
 Suggests: BiocManager, BiocStyle, bookdown, htmltools, knitr,
           testthat (>= 3.0.0), vegan, yaml

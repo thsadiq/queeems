@@ -2,10 +2,13 @@
 \docType{class}
 \alias{baseSummary}
 \alias{baseSummary-class}
-\alias{show, baseSummary-method}
-\alias{nseqs, baseSummary-method}
-\alias{datatype, baseSummary-method}
-\alias{basecensus, baseSummary-method}
+\alias{nseqs}
+\alias{datatype}
+\alias{basecensus}
+\alias{show,baseSummary-method}
+\alias{nseqs,baseSummary-method}
+\alias{datatype,baseSummary-method}
+\alias{basecensus,baseSummary-method}
 
 \title{Protein Base Composition Numerics}
 

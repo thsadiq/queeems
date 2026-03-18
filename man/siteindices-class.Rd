@@ -2,12 +2,13 @@
 \docType{class}
 \alias{siteindices}
 \alias{siteindices-class}
-\alias{show, siteindices-method}
-\alias{summary, siteindices-method}
-\alias{renyiA, siteindices-method}
-\alias{nonvaries, siteindices-method}
-\alias{informula, siteindices-method}
-\alias{sitentropies, siteindices-method}
+\alias{sitentropies}
+\alias{show,siteindices-method}
+\alias{summary,siteindices-method}
+\alias{renyiA,siteindices-method}
+\alias{nonvaries,siteindices-method}
+\alias{informula,siteindices-method}
+\alias{sitentropies,siteindices-method}
 
 \title{Molecular Information Entropy Processor}
 

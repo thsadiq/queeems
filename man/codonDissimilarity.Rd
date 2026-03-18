@@ -1,6 +1,7 @@
 \name{codonDissimilarity}
 \alias{codonDissimilarity}
 \alias{codonDissimilarity.BStringSet}
+\alias{codonDissimilarity,BStringSet,numeric-method}
 
 \title{Codon Census Matrix Matched by Nucleotide Dissimilarity}
 

@@ -2,13 +2,18 @@
 \docType{class}
 \alias{geneindex}
 \alias{geneindex-class}
-\alias{show, geneindex-method}
-\alias{renyiA, geneindex-method}
-\alias{useSyn, geneindex-method}
-\alias{gentropy, geneindex-method}
-\alias{nonvaries, geneindex-method}
-\alias{informula, geneindex-method}
-\alias{sitecount, geneindex-method}
+\alias{renyiA}
+\alias{useSyn}
+\alias{gentropy}
+\alias{informula}
+\alias{sitecount}
+\alias{show,geneindex-method}
+\alias{renyiA,geneindex-method}
+\alias{useSyn,geneindex-method}
+\alias{gentropy,geneindex-method}
+\alias{nonvaries,geneindex-method}
+\alias{informula,geneindex-method}
+\alias{sitecount,geneindex-method}
 
 \title{Protein Information Entropy Handling}
 

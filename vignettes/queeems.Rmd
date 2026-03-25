@@ -28,13 +28,20 @@ vignette: |
 
 # Introduction
 `queeems` is a R [@cran2025] package hosted on the Bioconductor [@bioc2004]
-platform that contains Bayesian functions that can be used to assess the
-quality of genetic data that are intended for use in phylogeny reconstruction
-or in broader evolutionary analyses, including natural selection
-investigations. In this practical application of some of the primary
-functions in the package, I present analyses of simulated sequences to
-illustrate how to get the most out of this resource.
-
+platform. The package is useful for assessing the quality of genetic data
+that are meant for evolutionary investigations. Some invaluable methods
+and resources are available in the literature for similar purpose. These
+include: DAMBE [@xia2002], SatuTe [@manuel2025], TreSpEx [@struck2014],
+PAUP [@swoff2002], RASA [@lyons1996] and MUST [@herve1993]. Interested
+reader may consult @fleming2023 for a short review of some of the works.
+These existing techniques are designed primarily for investigations related
+to phylogeny reconstruction and many of them rely on adhoc frequentist-based
+hypotheses tests. `queeems` contains Bayesian functions that can be used
+to assess the quality of genetic data that are intended for use in
+phylogeny reconstruction or in broader evolutionary inquiries, including
+natural selection investigations. In this practical application of some
+of the primary functions in the package, I present analyses of simulated
+sequences to illustrate how to get the most out of this resource.
 
 # Installation
 Use the following code to install `queeems` from the Bioconductor platform.

@@ -45,7 +45,7 @@
                 "CCTCAGATCACTCTTGTCTCAATAAAAGTA",
                 "TGG-AGCGACCCCTTGTCTCAATAAAAATA")
     dnaseqs <- Biostrings::DNAStringSet(egdata)
-    names(dnaseqs) <- paste0("seq",seq(1,3))
+    names(dnaseqs) <- paste("seq", seq(1,3), sep="")
     egpath <- file.path(tempdir(), "egdata.fas")
     Biostrings::writeXStringSet(dnaseqs, egpath)
     cleanseqs <- seqfilter(egpath, c(4,6,8), "dna")

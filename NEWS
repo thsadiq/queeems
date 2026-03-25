@@ -7,6 +7,9 @@ This file documents package changes since first submission on Bioconductor.
 + Pushed first fully functional version to Git.
 + Submitted on Bioconductor for review.
 
-0.99.1 - 0.99.2 (2026-03-18): Edits After First Bioconductor Build
-+ Updated R version
-+ Addressed R CMD CHECK warnings
+0.99.1 - 0.99.3 (2026-03-25): Edits After First Bioconductor Build
++ Updated R version.
++ Addressed R CMD CHECK warnings.
++ Replaced "paste0" occurrences with "paste".
++ Replaced "import" with "importFrom" in NAMESPACE.
++ Deleted all "::" occurrences.

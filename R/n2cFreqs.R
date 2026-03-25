@@ -15,9 +15,11 @@ codon2int <- function(codon){
 vetFreqs <- function(nucFracs){
     nTags <- c("A","C","G","T")
     init <- "\nNucleotide frequency vector "
-    note0 <- paste0(init, "must have at least 4 elements.")
-    note3 <- paste0(init, "must be named properly or not contain `NA`.")
-    note2 <- paste0(init,"should only contain non-negative numerical values.")
+    note3 <- paste(init, "must be named ",
+        "properly or not contain `NA`.", sep="")
+    note2 <- paste(init, "should only contain ",
+        "non-negative numerical values.", sep="")
+    note0 <- paste(init, "must have at least 4 elements.", sep="")
     note4 <- "\nOnly first four values in nucleotide frequency vector used."
     crime1 <- (length( names(nucFracs)) == 0) & (length(nucFracs) < 4)
     if( !all(nucFracs >= 0)) stop(note2, call.=FALSE)

@@ -38,8 +38,8 @@ si.renyi <- function(countvector, nleaf, ralpha){
 checkFml <- function(fml){
     newTech <- tolower(fml)
     invalid <- !(newTech %in% c("shannon", "renyi"))
-    msg <- paste0("Incorrect `fml` specification.",
-        "\n\t Input one of `shannon` or `renyi`.")
+    msg <- paste("Incorrect `fml` specification.\n\t",
+        " Input one of `shannon` or `renyi`.", sep="")
     if(invalid) stop(msg, call.=FALSE)
     return(newTech)
 }

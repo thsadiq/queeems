@@ -6,7 +6,7 @@
 
 nucPIgen <- function(wsize, wless1, weightmax){
     allweights <- fubarweights(wsize, wless1, weightmax, FALSE)
-    nucIndices <- gtools::permutations(wsize, 4)
+    nucIndices <- permutations(wsize, 4)
     nucWeights <- apply(nucIndices, 1, function(i) allweights[i])
     nucFreqs <- apply(nucWeights, 2, softmax, maxadj=TRUE)
     return(nucFreqs)

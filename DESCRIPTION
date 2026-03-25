@@ -1,5 +1,5 @@
 Package: queeems
-Version: 0.99.2
+Version: 0.99.3
 Date: 2025-03-18
 License: GPL-3 + file LICENSE
 Authors@R: c(person("Hassan", "Sadiq", role=c("aut","cre","cph","fnd"),
@@ -17,15 +17,38 @@ Description: Biological inferences obtained from molecular data are only as
     with respect to codon bases to allow for straightforward applications in
     extensive computational biology inquiries, including natural selection
     analyses.
-Depends: R (>= 4.6.0), gtools, Matrix, Biostrings, stats
-Imports: methods
-Suggests: BiocManager, BiocStyle, bookdown, htmltools, knitr,
-          testthat (>= 3.0.0), vegan, yaml
+Depends:
+    R (>= 4.6.0),
+    Biostrings,
+    gtools,
+    Matrix,
+    stats
+Imports:
+    methods
+Suggests:
+    BiocManager,
+    BiocStyle,
+    bookdown,
+    htmltools,
+    knitr,
+    testthat (>= 3.0.0),
+    vegan,
+    yaml
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-biocViews: Alignment, Bayesian, Classification, DataImport, Genetics,
-            MathematicalBiology, ResearchField, Sequencing, SequenceMatching,
-            Software, StatisticalMethod, WorkflowStep,
+biocViews:
+    Alignment,
+    Bayesian,
+    Classification,
+    DataImport,
+    Genetics,
+    MathematicalBiology,
+    ResearchField,
+    Sequencing,
+    SequenceMatching,
+    Software,
+    StatisticalMethod,
+    WorkflowStep
 Contact: <hassan.t.sadiq@gmail.com>
 URL: https://github.com/thsadiq/queeems
 BugReports: https://github.com/thsadiq/queeems/issues

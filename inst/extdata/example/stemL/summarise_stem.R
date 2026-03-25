@@ -34,9 +34,9 @@ blent <- seq(0.03, 0.15, 0.03)
 btags <- sprintf("%02.0f", blent*100)
 
 # ><>< # Create data frames to save interesting outputs
-cnames <- paste0("bl", btags)
 rnames <- c("low","avg","upp")
-vnames <- paste0("rep.", seq(1,nreps))
+cnames <- paste("bl", btags, sep="")
+vnames <- paste("rep.", seq(1,nreps), sep="")
 homoBF <- matrix(NA, nreps, length(btags), dimnames=list(vnames,cnames))
 sbayes <- matrix(NA, nreps, length(btags), dimnames=list(vnames,cnames))
 smrybx <- matrix(NA, 3, length(btags), dimnames=list(rnames,cnames))
@@ -46,7 +46,7 @@ nucent <- codent <- aasent <- smrybx
 
 for(a1 in seq(1,length(btags))){
     # ><>< # Read merged molecular sequences data as text
-    seqsname <- file.path(datadir, paste0("seqs",btags[a1],".txt"))
+    seqsname <- file.path(datadir, paste("seqs",btags[a1],".txt",sep=""))
     seqstext <- readLines(seqsname)
 
     # ><>< # Extract information about number of simulated replicates

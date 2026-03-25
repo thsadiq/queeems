@@ -16,11 +16,11 @@ mergeseq <- function(scoupObj, simID, seqLoc){
     nleaf <- nrow(newData)
     ndna <- ncol( seqs(scoupObj)) * 3
     apend <- ifelse(simID == 1, FALSE, TRUE)
-    preSEQ <- paste0("  ", nleaf, "  ", ndna)
+    preSEQ <- paste("  ", nleaf, "  ", ndna, sep="")
     write.table(preSEQ, seqLoc, apend, FALSE,
             row.names=FALSE, col.names=FALSE)
     wrt <- vapply(seq(1,nleaf), function(w){
-        sq0 <- paste0(">S", sprintf("%03.0f",w), "\n", newData[w,])
+        sq0 <- paste(">S", sprintf("%03.0f",w), "\n", newData[w,], sep="")
         write.table(sq0,seqLoc,TRUE,FALSE,row.names=FALSE,col.names=FALSE)
         return(0)
         }, FUN.VALUE=0)
@@ -76,7 +76,7 @@ dndsarray <- matrix(NA,ncol=length(blent),nrow=sims,dimnames=list(NULL,btags))
 
 for(h in seq(1,length(blent))){
     # Create sequence file
-    seqPath <- file.path(pryPath, paste0("seqs", btags[h],".txt"))
+    seqPath <- file.path(pryPath, paste("seqs",btags[h],".txt",sep=""))
 
     # Sequence alignment size information
     seqStat <- seqDetails(c(nsite=sitesize, ntaxa=leaves, blength=blent[h]))

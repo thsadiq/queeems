@@ -16,11 +16,11 @@ mergeseq <- function(scoupObj, simID, seqLoc){
     nleaf <- nrow(newData)
     ndna <- ncol( seqs(scoupObj)) * 3
     apend <- ifelse(simID == 1, FALSE, TRUE)
-    preSEQ <- paste0("  ", nleaf, "  ", ndna)
+    preSEQ <- paste("  ", nleaf, "  ", ndna, sep="")
     write.table(preSEQ, seqLoc, apend, FALSE,
             row.names=FALSE, col.names=FALSE)
     wrt <- vapply(seq(1,nleaf), function(w){
-        sq0 <- paste0(">S", sprintf("%03.0f",w), "\n", newData[w,])
+        sq0 <- paste(">S", sprintf("%03.0f",w), "\n", newData[w,], sep="")
         write.table(sq0,seqLoc,TRUE,FALSE,row.names=FALSE,col.names=FALSE)
         return(0)
         }, FUN.VALUE=0)
@@ -73,7 +73,7 @@ ntags <- sprintf("%.0f", nsvary*10)
 # Create storage for dN/dS estimates
 dndsPath <- file.path(pryPath, "dnds.csv")
 dndsarray <- matrix(NA, ncol=length(nsvary),
-        nrow=sims, dimnames=list(NULL,paste0("ns0",ntags)))
+        nrow=sims, dimnames=list(NULL,paste("ns0",ntags,sep="")))
 
 for(h in seq(1,length(nsvary))){
     # OU landscape shift parameters
@@ -81,7 +81,7 @@ for(h in seq(1,length(nsvary))){
     hbrunoStat <- hbInput(c(vNvS=newvnvs, nsynVar=nsvary[h], Ne=effpop))
 
     # Create sequence file
-    seqPath <- file.path(pryPath, paste0("gdata", ntags[h],".txt"))
+    seqPath <- file.path(pryPath, paste("gdata",ntags[h],".txt",sep=""))
 
     # Iterate over the specified number of replicates
     for(i in seq(1,sims)){ 

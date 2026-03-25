@@ -26,7 +26,7 @@ setMethod("show", "siteindices", function(object) {
     ans0 <- sgroup(object)
     m0sub <- toupper( informula(object))
     atext <- sprintf("%.2f", renyiA(object))
-    redit <- paste0("Renyi (\U03B1 \U2248 ", atext,")")
+    redit <- paste("Renyi (\U03B1 \U2248 ", atext,")", sep="")
     m1sub <- ifelse(m0sub=="SHANNON", "Shannon", redit)
     cat("\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
     cat("\n\aSummarised Output for Entropy Analyses:")

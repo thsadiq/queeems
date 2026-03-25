@@ -55,23 +55,23 @@ setGeneric("BFthreshold", function(satube) standardGeneric("BFthreshold") )
 # ><>< # Create Citation Function
 txt0 <- paste("Below is/are citation(s) relevant to the queeems package:")
 txt1 <- paste("The corresponding BibTeX entry(ies) is/are as follows:")
-tr1 <- paste0("Sadiq, H. (in progress). queeems: Quantify the Extent ",
-    "of Evolutionary Evidence in Molecular Sequences. R package.")
-tr2 <- paste0("Sadiq, H. (in progress). Bayesian Approach",
-    " to Assessing Molecular Saturation. Preprint.")
-br1 <- paste0("@Manual{,\n\t","title = {queeems: Quantify the Extent ",
+tr1 <- paste("Sadiq, H. (in progress). queeems: Quantify the Extent ",
+    "of Evolutionary Evidence in Molecular Sequences. R package.", sep="")
+tr2 <- paste("Sadiq, H. (in progress). Bayesian Approach",
+    " to Assessing Molecular Saturation. Preprint.", sep="")
+br1 <- paste("@Manual{,\n\t","title = {queeems: Quantify the Extent ",
     "of Evolutionary Evidence in Molecular Sequences},\n\t","author =",
     " {Hassan Sadiq},\n\tyear = {in progress},\n\t", "note = {R",
-    " Package},\n\turl = {https://github.com/thsadiq/queeems},\n}")
-br2 <- paste0("@Manual{,\n\t","title = {Bayesian Approach to Assessing ",
+    " Package},\n\turl = {https://github.com/thsadiq/queeems},\n}", sep="")
+br2 <- paste("@Manual{,\n\t","title = {Bayesian Approach to Assessing ",
     "Molecular Saturation},\n\t","author = {Hassan Sadiq},\n\t",
-    "year = {in progress},\n\t", "note = {Preprint},\n}")
+    "year = {in progress},\n\t", "note = {Preprint},\n}", sep="")
 citevect <- c(tr1, tr2, br1, br2)
 citeData <- matrix(citevect, nrow=length(citevect)%/%2, byrow=FALSE)
 
 aboutQueeems <- function(cite=NULL){
-    citemsg <- paste0("Invalid citation index. There are ",
-        nrow(citeData), " available queeems-related references.")
+    citemsg <- paste("Invalid citation index. There are ",
+        nrow(citeData), " available queeems-related references.", sep="")
     input <- ifelse(is(cite,"NULL"), TRUE, cite %in% seq(1,nrow(citeData)))
     if(!input) stop( citemsg )
     if( is(cite,"NULL") ){

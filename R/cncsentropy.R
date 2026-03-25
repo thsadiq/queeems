@@ -5,7 +5,7 @@
 # ><>< ================================================================ ><>< #
 
 cncsentropy <- function(fastafile, synonym, diffceil, fml, ralpha=NA){
-    basestrings <- Biostrings::readBStringSet(fastafile)
+    basestrings <- readBStringSet(fastafile)
     cnsoutput <- CnCs(basestrings, synonym, diffceil)
     nleaves <- length(basestrings)
     entcount <- nsfreqs(cnsoutput)

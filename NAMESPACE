@@ -1,8 +1,17 @@
 import(stats)
-import(gtools)
 import(Matrix)
-import("methods")
-import("Biostrings")
+import(methods)
+importFrom(gtools, permutations)
+importFrom(Biostrings, width)
+importFrom(Biostrings, BStringSet)
+importFrom(Biostrings, AAStringSet)
+importFrom(Biostrings, DNAStringSet)
+importFrom(Biostrings, readBStringSet)
+importFrom(Biostrings, consensusMatrix)
+importFrom(Biostrings, readAAStringSet)
+importFrom(Biostrings, consensusString)
+importFrom(Biostrings, writeXStringSet)
+importFrom(Biostrings, readDNAStringSet)
 
 exportClasses(
     baseSummary,
@@ -35,26 +44,26 @@ export(
 )
 
 exportMethods(
-    "bstringCodons",
-    "codonDissimilarity",
-    "nseqs",
-    "datatype",
-    "basecensus",
-    "nORs",
-    "nsfreqs",
-    "nonvaries",
-    "nucbalance",
-    "wildtriplets",
-    "renyiA",
-    "informula",
-    "sitentropies",
-    "useSyn",
-    "gentropy",
-    "sitecount",
-    "BFs",
-    "LogL0",
-    "LogL1",
-    "mainPi",
-    "BFthreshold"
+    bstringCodons,
+    codonDissimilarity,
+    nseqs,
+    datatype,
+    basecensus,
+    nORs,
+    nsfreqs,
+    nonvaries,
+    nucbalance,
+    wildtriplets,
+    renyiA,
+    informula,
+    sitentropies,
+    useSyn,
+    gentropy,
+    sitecount,
+    BFs,
+    LogL0,
+    LogL1,
+    mainPi,
+    BFthreshold
 )
 

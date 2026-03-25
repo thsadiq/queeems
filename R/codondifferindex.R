@@ -6,7 +6,7 @@
 
 codondifferindex <- function(fastafile, diffUnit, fml, ralpha=NA){
     if(!(diffUnit%in%seq(1,3))) stop("\nInput `diffUnit` \U2284 {1,2,3}")
-    basestrings <- Biostrings::readBStringSet(fastafile)
+    basestrings <- readBStringSet(fastafile)
     differoutput <- codonDissimilarity(basestrings, diffUnit)
     nouse <-  which(colSums( differoutput) == 0)
     nleaves <- length(basestrings)

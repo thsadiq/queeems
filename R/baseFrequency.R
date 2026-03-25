@@ -7,14 +7,14 @@
 baseCheck <- function(basename){
     basetag <- tolower(basename)
     invalid <- !(basetag %in% c("aa", "dna", "codon"))
-    msg <- paste0("Incorrect `basename` specification.",
-        "\n\t Input one of `dna`, `codon` or `aa`.")
+    msg <- paste("Incorrect `basename` specification.",
+        "\n\t Input one of `dna`, `codon` or `aa`.", sep="")
     if(invalid) stop(msg, call.=FALSE)
     return(basetag)
 }
 
 baseFrequency.noncodon <- function(baseseqs){
-    countmatrix <- Biostrings::consensusMatrix(baseseqs, baseOnly=TRUE)
+    countmatrix <- consensusMatrix(baseseqs, baseOnly=TRUE)
     excessrow <- which( rownames(countmatrix) == "other" )
     finalFrame <- countmatrix[-excessrow,]
     return(finalFrame)
@@ -41,8 +41,8 @@ baseScreen <- function(nleaf, freqMatrix, baseseqs){
     aptLength <- min(.5 * nrow(freqMatrix), 0.25 * max(width(baseseqs)))
     exitest <- sum(rowSums(freqMatrix) != 0) < aptLength
     exitbin <- sum(colSums(freqMatrix) < .9 * nleaf) > (.5 * ncol(freqMatrix))
-    msg <- paste0("Significant data imbalance detected.\nYou ",
-        "may need to check that correct `basename` specified.")
+    msg <- paste("Significant data imbalance detected.\nYou may ",
+        "need to check that correct `basename` specified.",sep="")
     if(exitest | exitbin) warning(msg, call.=FALSE)
     return(0)
 }
@@ -50,9 +50,9 @@ baseScreen <- function(nleaf, freqMatrix, baseseqs){
 baseFrequency <- function(fastafile, basename){
     cleanbase <- baseCheck(basename)
     baseseqs <- switch(cleanbase,
-        aa = Biostrings::readAAStringSet(fastafile),
-        dna = Biostrings::readDNAStringSet(fastafile),
-        codon = Biostrings::readBStringSet(fastafile)
+        aa = readAAStringSet(fastafile),
+        dna = readDNAStringSet(fastafile),
+        codon = readBStringSet(fastafile)
     )
     freqMatrix <- switch(cleanbase,
         codon = baseFrequency.codon(baseseqs),

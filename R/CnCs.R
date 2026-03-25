@@ -20,8 +20,8 @@ getinvary <- function(sitecodons){
 
 CnCs <- function(bstringset, synonym, diffceil){
     nonsynarray <- nonSynonymous(synonym, diffceil)
-    wildstring <- Biostrings::consensusString(bstringset)
-    wildseqs <- Biostrings::BStringSet(wildstring)
+    wildstring <- consensusString(bstringset)
+    wildseqs <- BStringSet(wildstring)
     codonprotein <- bstringCodons(bstringset)
     seqinvaries <- apply(codonprotein, 2, getinvary)
     invarysites <- which( c(seqinvaries))

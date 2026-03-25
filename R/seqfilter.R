@@ -21,19 +21,19 @@ siteIDcheck <- function(deadsites, nsites){
 seqfilter <- function(fastafile, deadsites, basename, write=FALSE){
     cleanbase <- baseCheck(basename)
     baseseqs <- switch(cleanbase,
-        aa = as.matrix( Biostrings::readAAStringSet(fastafile)),
-        dna = as.matrix( Biostrings::readDNAStringSet(fastafile)),
-        codon = bstringCodons( Biostrings::readBStringSet(fastafile)))
+        aa = as.matrix( readAAStringSet(fastafile)),
+        dna = as.matrix( readDNAStringSet(fastafile)),
+        codon = bstringCodons( readBStringSet(fastafile)))
     cleansiteid <- siteIDcheck(deadsites, ncol(baseseqs))
     cleanmat <- baseseqs[,-cleansiteid]
     genetext <- apply(cleanmat, 1, paste, collapse="")
     editedseqs <- switch(cleanbase,
-        aa = Biostrings::AAStringSet(genetext),
-        dna = Biostrings::DNAStringSet(genetext),
-        codon = Biostrings::BStringSet(genetext))
+        aa = AAStringSet(genetext),
+        dna = DNAStringSet(genetext),
+        codon = BStringSet(genetext))
     if(write != FALSE){
         filepath <- as.character(write)
-        Biostrings::writeXStringSet(editedseqs, filepath)
+        writeXStringSet(editedseqs, filepath)
         message("\n\nUpdated sequence file saved as:\n\t", filepath, "\n")
     }
     return(editedseqs)

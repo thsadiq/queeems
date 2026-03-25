@@ -9,9 +9,9 @@ setMethod("show", "baseSummary", function(object) {
     temp <- as.numeric( table( colSums(object@seqsNumerics)))
     cat("\nProtein base type:\t\t ", object@baseType)
     cat("\nNumber of sequences:\t\t ", object@extantSize)
-    cat(paste0("\nDimension of numeric output:\t"))
-    cat(paste0("(base_size=", nrow(object@seqsNumerics), ")"))
-    cat(paste0("-by-(site_size=", ncol(object@seqsNumerics), ")\n"))
+    cat(paste("\nDimension of numeric output:\t", sep=""))
+    cat(paste("(base_size=", nrow(object@seqsNumerics), ")", sep=""))
+    cat(paste("-by-(site_size=", ncol(object@seqsNumerics), ")\n", sep=""))
     cat("# :::::::\n\n")
     }
 )

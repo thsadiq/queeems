@@ -8,7 +8,7 @@ setMethod("show", "cncsframe", function(object) {
     cat("\n# :::::::")
     cat("\nCounts generator:\t\t ", object@nstype, "codons")
     cat("\nNon-informative codon sites:\t ", sum(object@nscensus == 0),
-        paste0("(of ", length(object@wildseq), ")"))
+        paste("(of ", length(object@wildseq), ")", sep=""))
     cat("\nMax. nuc. mismatch tolerance:\t ", object@maxdiff)
     cat("\n# :::::::\n\n")
     }

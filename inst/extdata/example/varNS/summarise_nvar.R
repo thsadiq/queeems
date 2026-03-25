@@ -41,14 +41,14 @@ nsvary <- seq(1, 5) / 10
 ntags <- sprintf("%.0f", nsvary*10)
 
 # ><>< # Create data frames to save interesting outputs
-cnames <- paste0("ns", ntags)
+cnames <- paste("ns", ntags, sep="")
 rnames <- c("low","avg","upp")
 homoBF <- matrix(NA, nreps, length(ntags), dimnames=list(NULL,cnames))
 sbayes <- matrix(NA, nreps, length(ntags), dimnames=list(NULL,cnames))
 
 for(a1 in seq(1,length(ntags))){
     # ><>< # Read merged molecular sequences data as text
-    seqsname <- file.path(datadir, paste0("gdata",ntags[a1],".txt"))
+    seqsname <- file.path(datadir, paste("gdata",ntags[a1],".txt",sep=""))
     seqstext <- readLines(seqsname)
 
     # ><>< # Extract information about number of simulated replicates

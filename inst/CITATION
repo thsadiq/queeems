@@ -4,12 +4,11 @@ citEntry(entry = "manual",
         title = "queeems: Quantify the Extent of Evolutionary Evidence
                   in Molecular Sequences",
         author = personList(as.person("Hassan Sadiq")),
-        organization = "R Package Version 0.99",
+        note = "Bioconductor/R Package",
         year = "2026",
-        volume = "",
-        pages = "",
         doi = "10.18129/B9.bioc.queeems",
         textVersion = 
         paste("Sadiq, H. (2026)",
               "queeems: Quantify the Extent of Evolutionary Evidence
-              in Molecular Sequences", "R Package Version 0.99"))
+              in Molecular Sequences", "Bioconductor/R Package",
+              "DOI: 10.18129/B9.bioc.queeems"))

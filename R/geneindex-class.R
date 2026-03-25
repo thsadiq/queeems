@@ -18,7 +18,7 @@ gget <- function(gent){
     blanks <- length( nonvaries(gent))
     m0txt <- toupper( informula(gent))
     aword <- sprintf("%.2f", renyiA(gent))
-    rtext <- paste0("Renyi (\U03B1 \U2248 ", aword,")")
+    rtext <- paste("Renyi (\U03B1 \U2248 ", aword,")", sep="")
     mword <- ifelse(m0txt=="SHANNON", "Shannon", rtext)
     sOut <- list(mword=mword, toutcol=colsize,
         void=blanks, hindex=hvalue, csyn=csyn)

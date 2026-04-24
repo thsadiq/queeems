@@ -5,7 +5,7 @@
 # ><>< ================================================================ ><>< #
 
 pispecs <- function(nweights, wless1, weightmax){
-    wrd1 <- "\nNumber of weight categories (`nweights`) must be \U2264 4."
+    wrd1 <- "\nNumber of weight categories (`nweights`) must be \U2265 4."
     wrd2 <- paste("\nInappropriate `wless1` input:\nMust be such that",
         " at least two weight values are > 0 and \U2264 1.", sep="")
     wrd3 <- paste("\nIncorrect weight upper bound input:",

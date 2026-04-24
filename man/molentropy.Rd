@@ -9,17 +9,17 @@
 }
 
 \usage{
-    molentropy(fastafile, basename, fml, ralpha=NA)
+    molentropy(fastafile, basename="dna", fml="shannon", ralpha=NA)
 }
 
 \arguments{
     \item{fastafile}{path to a FASTA format file that contains a protein
         sequence.}
     \item{basename}{specification of how the data must be encoded. It can
-        be \code{'dna'}, \code{'codon'} or \code{'aa'} for DNA, codon or
-        amino acid, respectively.}
-    \item{fml}{character input that can be one of \code{"shannon"} or
-        \code{"renyi"}.}
+        be \code{'dna'} (default), \code{'codon'} or \code{'aa'} for DNA,
+        codon or amino acid, respectively.}
+    \item{fml}{character input that can be one of \code{"shannon"} (default)
+        or \code{"renyi"}.}
     \item{ralpha}{a fraction between 0 and 1 that is needed for Renyi
         index calculation.}
 }

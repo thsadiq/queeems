@@ -9,14 +9,15 @@
 }
 
 \usage{
-    CnCs(bstringset, synonym, diffceil)
+    CnCs(bstringset, synonym=FALSE, diffceil=1)
 }
 
 \arguments{
     \item{bstringset}{Biostrings::Bstringset object that carries an
         empirical protein sequence.}
     \item{synonym}{logical entry that indicates whether synonymous
-        [\code{TRUE}] or non-synonymous [\code{FALSE}] counts are needed.}
+        [\code{TRUE}] or non-synonymous [\code{FALSE} (default)] counts
+        are needed.}
     \item{diffceil}{maximum number of nucleotide mismatches that
         is tolerated.}
 }
@@ -33,7 +34,8 @@
     only be informative when non-synonymous counts are sought, i.e. if
     \code{synonym = FALSE}. The \code{diffceil} input implies the maximum,
     not the exact, number of nucleotide mismatches allowed. For example,
-    \code{diffceil = 2} accommodates zero, one or two nucleotide mismatches.
+    \code{diffceil = 1} (default) accommodates zero or one nucleotide
+    mismatches.
 }
 
 \value{

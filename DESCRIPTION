@@ -1,6 +1,6 @@
 Package: queeems
-Version: 0.99.4
-Date: 2025-03-25
+Version: 0.99.5
+Date: 2025-04-24
 License: GPL-3 + file LICENSE
 Authors@R: c(person("Hassan", "Sadiq", role=c("aut","cre","cph","fnd"),
                     email="hassan.t.sadiq@gmail.com",
@@ -19,21 +19,16 @@ Description: Biological inferences obtained from molecular data are only as
     analyses.
 Depends:
     R (>= 4.6.0),
-    Biostrings,
+    Biostrings
+Imports:
     gtools,
     Matrix,
+    methods,
     stats
-Imports:
-    methods
 Suggests:
-    BiocManager,
     BiocStyle,
-    bookdown,
-    htmltools,
     knitr,
-    testthat (>= 3.0.0),
-    vegan,
-    yaml
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 biocViews:

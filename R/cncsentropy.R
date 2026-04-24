@@ -4,7 +4,8 @@
 # ><><              Global (Non-)Synonymous Entropy Index.              ><>< #
 # ><>< ================================================================ ><>< #
 
-cncsentropy <- function(fastafile, synonym, diffceil, fml, ralpha=NA){
+cncsentropy <- function(fastafile, synonym=FALSE,
+    diffceil=1, fml="shannon", ralpha=NA){
     basestrings <- readBStringSet(fastafile)
     cnsoutput <- CnCs(basestrings, synonym, diffceil)
     nleaves <- length(basestrings)

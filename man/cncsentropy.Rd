@@ -10,18 +10,19 @@
 }
 
 \usage{
-    cncsentropy(fastafile, synonym, diffceil, fml, ralpha=NA)
+    cncsentropy(fastafile, synonym=FALSE, diffceil=1, fml="shannon", ralpha=NA)
 }
 
 \arguments{
     \item{fastafile}{path to a FASTA format file that contains a protein
         sequence.}
     \item{synonym}{logical entry that indicates whether synonymous
-        [\code{TRUE}] or non-synonymous [\code{FALSE}] counts are preferred.}
+        [\code{TRUE}] or non-synonymous [\code{FALSE} (default)] counts
+        are preferred.}
     \item{diffceil}{maximum number of nucleotide mismatches that
-        is tolerated.}
-    \item{fml}{character input that can be one of \code{"shannon"} or
-        \code{"renyi"}.}
+        is tolerated. Default value is \code{1}.}
+    \item{fml}{character input that can be one of \code{"shannon"} (default)
+        or \code{"renyi"}.}
     \item{ralpha}{a fraction between 0 and 1 that is needed for Renyi
         index calculation.}
 }

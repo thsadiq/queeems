@@ -31,6 +31,7 @@ test_that("code composed in cncsentropy works", {
     run4 <- cncsentropy(useq, FALSE, 3, "renyi", 0.23)
     expect_true(gentropy(run1) <= gentropy(run2))
     expect_true(gentropy(run4) >= gentropy(run3))
+    expect_equal( gentropy(run1), gentropy( cncsentropy(useq,TRUE)))
 })
 
 # ><>< ================================================================ ><>< #

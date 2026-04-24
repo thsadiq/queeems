@@ -1,7 +1,10 @@
-import(stats)
-import(Matrix)
-import(methods)
-importFrom(gtools, permutations)
+importFrom(stats, sd)
+importFrom(methods, is)
+importFrom(methods, new)
+importFrom(Matrix, Matrix)
+importFrom(Matrix, rowSums)
+importFrom(Matrix, colSums)
+importFrom(Matrix, summary)
 importFrom(Biostrings, width)
 importFrom(Biostrings, BStringSet)
 importFrom(Biostrings, AAStringSet)
@@ -12,6 +15,7 @@ importFrom(Biostrings, readAAStringSet)
 importFrom(Biostrings, consensusString)
 importFrom(Biostrings, writeXStringSet)
 importFrom(Biostrings, readDNAStringSet)
+importFrom(gtools, permutations)
 
 exportClasses(
     baseSummary,

@@ -4,7 +4,7 @@
 # ><><      Molecular Entropy Generated with Codon Mismatch Counts      ><>< #
 # ><>< ================================================================ ><>< #
 
-codondifferindex <- function(fastafile, diffUnit, fml, ralpha=NA){
+codondifferindex <- function(fastafile, diffUnit=1, fml="shannon", ralpha=NA){
     if(!(diffUnit%in%seq(1,3))) stop("\nInput `diffUnit` \U2284 {1,2,3}")
     basestrings <- readBStringSet(fastafile)
     differoutput <- codonDissimilarity(basestrings, diffUnit)

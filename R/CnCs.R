@@ -18,7 +18,7 @@ getinvary <- function(sitecodons){
     return(invariant)
 }
 
-CnCs <- function(bstringset, synonym, diffceil){
+CnCs <- function(bstringset, synonym=FALSE, diffceil=1){
     nonsynarray <- nonSynonymous(synonym, diffceil)
     wildstring <- consensusString(bstringset)
     wildseqs <- BStringSet(wildstring)

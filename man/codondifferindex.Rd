@@ -9,7 +9,7 @@
 }
 
 \usage{
-    codondifferindex(fastafile, diffUnit, fml, ralpha=NA)
+    codondifferindex(fastafile, diffUnit=1, fml="shannon", ralpha=NA)
 }
 
 \arguments{
@@ -17,8 +17,8 @@
         sequence.}
     \item{diffUnit}{number of nucleotide mismatches between codon pairs
         to use for the calculations.}
-    \item{fml}{character input that can be one of \code{"shannon"} or
-        \code{"renyi"}.}
+    \item{fml}{character input that can be one of \code{"shannon"} (default)
+        or \code{"renyi"}.}
     \item{ralpha}{a fraction between 0 and 1 that is needed for Renyi
         index calculation.}
 }

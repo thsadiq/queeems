@@ -48,8 +48,8 @@ scanapp <- function(approach){
     return(meth)
 }
 
-seqSaturation <- function(fastafile, approach, wsize,
-    wless1, weightmax, bfcutoff=10, sspi=0.10){
+seqSaturation <- function(fastafile, approach="A", wsize=6,
+    wless1=0.40, weightmax=7, bfcutoff=3, sspi=0.01){
     method <- scanapp(approach)
     sanalyses <- switch(method,
         A = seqsat1(fastafile, wsize, wless1, weightmax, bfcutoff, sspi),

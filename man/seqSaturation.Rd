@@ -8,19 +8,20 @@
 }
 
 \usage{
-    seqSaturation(fastafile, approach, wsize, wless1,
-        weightmax, bfcutoff=10, sspi=0.10)
+    seqSaturation(fastafile, approach="A", wsize=6, wless1=0.40,
+        weightmax=7, bfcutoff=3, sspi=0.01)
 }
 
 \arguments{
     \item{fastafile}{a character input of the full path to a \code{.fasta}
-        file that contains the protein data to be analysed.}
-    \item{approach}{one of `\code{A}`, `\code{B}` or `\code{C}` that
-        indicates the preferred saturation assessment method.}
-    \item{wsize}{number of \eqn{\pi} parameter weight classes.}
-    \item{wless1}{fraction of \eqn{\pi} weight classes to be less than one.}
-    \item{weightmax}{maximum \eqn{\pi} weight value.}
-    \item{bfcutoff}{Bayes factor cutoff.}
+        file that contains the genetic data to be analysed.}
+    \item{approach}{one of `\code{A}` (default), `\code{B}` or `\code{C}`
+        that indicates the preferred saturation assessment method.}
+    \item{wsize}{number of \eqn{\pi} parameter weight classes (default = 6).}
+    \item{wless1}{fraction of \eqn{\pi} weight classes to be less than one
+        (default = 0.40).}
+    \item{weightmax}{maximum \eqn{\pi} weight value (default = 7).}
+    \item{bfcutoff}{Bayes factor cutoff (default = 3).}
     \item{sspi}{tolerated proportion of saturated sites, overall.}
 }
 
@@ -31,16 +32,18 @@
     the technique is presented below.
     \itemize{
         \item \bold{Technique 1 (\code{approach = "A"}):}
-        \itemize{
-            \item Codons are combinations of nucleotide bases. Codons are
+
+            Codons are combinations of nucleotide bases. Codons are
             therefore more appealing for rigorous evolutionary analyses,
             including the popular investigation of natural selection as a
             ratio of non-synonymous to synonymous codon substitution rates.
             In addition, due to the smaller set of nucleotide bases (= 4)
             compared to codon bases (= 64), the former are expected to lose
-            evolutionary information faster. The substitution saturation test
-            built upon this reasoning reduces to the following hypotheses
-            statements.
+            evolutionary information faster. The substitution saturation
+            test built upon this reasoning reduces to the following
+            hypotheses statements.
+
+        \itemize{
             \item \emph{Null hypothesis (\code{H0})}: Evolutionary information
                 contained in codon data is significantly \bold{more} than the
                 information retrievable from associated nucleotide data. That
@@ -56,7 +59,7 @@
             \eqn{\code{BF}_\code{cutoff}} is the input \code{bfcutoff}. To
             verify these hypotheses, it is assumed that the number of codon
             and nucleotide bases observed at each of the corresponding
-            positions of protein data follows a multinomial distribution.
+            positions of genetic data follows a multinomial distribution.
             Bayes factors are then estimated independently for each codon
             site, \code{i = (1, 2, ..., n)}, as the ratio of maximum
             posterior log-likelihoods as follows.
@@ -120,7 +123,7 @@
             maximising.
 
             A single Bayes factor is also estimated to assess the overall
-            extent of saturation of the protein sequence data (Y). Separate
+            extent of saturation of the genetic sequence data (Y). Separate
             hypotheses statements about the true proportion of saturated
             sites (\eqn{\rho}), were necessary for this purpose. These
             hypotheses may be expressed as follows.
@@ -141,7 +144,48 @@
                     \rho_{0}^{} \right)}{L \left(Y \big| \rho \leq
                     \rho_{0}^{}\right)}.
             }
+        }
 
+        \item \bold{Technique 2 (\code{approach = "B"})} (in progress):
+
+            A significant number of existing codon models of evolution tolerate
+            only one nucleotide mismatch between codon pairs. The assumption is
+            that not enough time has passed for more than a single substitution
+            event to have occurred. The following hypotheses statements are
+            plausible consequence of this widely adopted assumption.
+
+        \itemize{
+            \item \emph{Null hypothesis (\code{H0})}: The frequencies
+                of the codon bases that make up the genetic data are better
+                described by a model that supports only a single nucleotide
+                mismatch between codon pairs. That is, sequence is \bold{not}
+                saturated. (\bold{\code{Bayes
+                Factor}} \eqn{\leq} \bold{\eqn{\code{BF}_\code{cutoff}}}).
+            \item \emph{Alternative hypothesis (\code{H1})}: Observed base
+                frequencies distribution is better supported by a model that
+                permits both two and three nucleotide mismatches per codon
+                pair. That is, sequence is saturated
+                (\bold{\code{Bayes Factor}} \eqn{>}
+                \bold{\eqn{\code{BF}_\code{cutoff}}}).
+        }
+
+        \item \bold{Technique 3 (\code{approach = "C"})} (in progress):
+
+            This should extend \code{Technique 2} by allowing for the
+            hypotheses to be nested such that Chi-Square likelihood ratio test
+            becomes applicable with the following updated hypothesis
+            statements.
+
+        \itemize{
+            \item \emph{Null hypothesis (\code{H0})}: Considering only one
+                nucleotide mismatch per codon pair captures majority of the
+                evidence of evolution that has accrued in the genetic data.
+                That is, sequence is \bold{not} saturated.
+            \item \emph{Alternative hypothesis (\code{H1})}: Including
+                information about one, two and three nucleotide mismatches
+                per codon pair captures significantly more evolutionary
+                evidence from the genetic data. That is, sequence is
+                saturated.
         }
     }
 }

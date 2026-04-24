@@ -8,7 +8,7 @@
 }
 
 \usage{
-    seqfilter(fastafile, deadsites, basename, write=FALSE)
+    seqfilter(fastafile, deadsites, basename="dna", write=FALSE)
 }
 
 \arguments{
@@ -16,8 +16,8 @@
         needs to be subsetted.}
     \item{deadsites}{integer indices of the base locations that should be
         removed from the sequence in \code{fastafile}.}
-    \item{basename}{one of \code{`dna`}, \code{`codon`} or \code{`aa`} that
-        indicates how the sequence data should be captured.}
+    \item{basename}{one of \code{`dna`} (default), \code{`codon`} or
+        \code{`aa`} that indicates how the sequence data should be captured.}
     \item{write}{optional full path to a file where the output sequence
         should be saved.}
 }

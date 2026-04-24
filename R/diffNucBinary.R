@@ -11,7 +11,7 @@ diffNucleotide <- function(codon){
     return( colSums(differ) )
 }
 
-diffNucBinary <- function(diffUnit){
+diffNucBinary <- function(diffUnit=1){
     errMsg <- "Invalid `diffUnit` input. It can only be set as 0, 1, 2 or 3."
     if(!(diffUnit %in% seq(0,3))) stop( errMsg )
     diffLogic <- vapply(senseCodon, function(x) diffNucleotide(x) == diffUnit,

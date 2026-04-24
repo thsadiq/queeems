@@ -21,7 +21,9 @@ test_that("all is well with CnCs-related functions", {
     expect_false( getinvary(c("AAC","AAT","AAT")))
     a5 <- nsfreqs( CnCs(testdata, TRUE, 1))[novaryings]
     a6 <- nsfreqs( CnCs(testdata, FALSE, 1))[novaryings]
-    expect_true( all(a5 == a6 ) )
+    a7 <- nonvaries( CnCs(testdata))
+    expect_equal( nonvaries( CnCs(testdata)),
+        nonvaries( CnCs(testdata, FALSE, 1)) )
 })
 
 # ><>< ================================================================ ><>< #

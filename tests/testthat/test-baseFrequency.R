@@ -35,6 +35,7 @@ test_that("baseFrequency functions work as intended", {
     expect_no_warning( baseFrequency(testdna, "dna") )
     expect_no_warning( baseFrequency(testdna, "codon") )
     expect_warning( expect_warning( baseFrequency(testaa, "dna") ) )
+    expect_equal( baseFrequency(testdna), baseFrequency(testdna, "dna"))
 })
 
 

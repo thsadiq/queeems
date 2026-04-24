@@ -18,7 +18,7 @@ siteIDcheck <- function(deadsites, nsites){
     return(deadsites)
 }
 
-seqfilter <- function(fastafile, deadsites, basename, write=FALSE){
+seqfilter <- function(fastafile, deadsites, basename="dna", write=FALSE){
     cleanbase <- baseCheck(basename)
     baseseqs <- switch(cleanbase,
         aa = as.matrix( readAAStringSet(fastafile)),

@@ -9,7 +9,7 @@
 }
 
 \usage{
-    baseFrequency(fastafile, basename)
+    baseFrequency(fastafile, basename="dna")
 }
 
 \arguments{
@@ -19,9 +19,9 @@
 }
 
 \details{
-    \code{basename} should be a character input and one of `dna`, `codon`
-    or `aa`. Any other input will trigger an error. A warning message may
-    also be returned if there is an indication of sequence-basename
+    \code{basename} should be a character input and one of `dna` (defualt),
+    `codon` or `aa`. Any other input will trigger an error. A warning message
+    may also be returned if there is an indication of sequence-basename
     mismatch. For example if `dna` is specified for a protein sequence
     saved in terms of amino acid bases.
 }

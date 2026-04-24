@@ -9,11 +9,11 @@
 }
 
 \usage{
-    diffNucBinary(diffUnit)
+    diffNucBinary(diffUnit=1)
 }
 
 \arguments{
-    \item{diffUnit}{A non-negative integer.}
+    \item{diffUnit}{A non-negative integer. Defaults to 1.}
 }
 
 \details{

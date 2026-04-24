@@ -4,7 +4,7 @@
 # ><><       Molecular Entropy Generated For Individual Base Site       ><>< #
 # ><>< ================================================================ ><>< #
 
-molentropy <- function(fastafile, basename, fml, ralpha=NA){
+molentropy <- function(fastafile, basename="dna", fml="shannon", ralpha=NA){
     molesumary <- baseFrequency(fastafile, basename)
     molecounts <- basecensus( molesumary )
     leafprevs <- nseqs( molesumary )

@@ -10,14 +10,14 @@
 }
 
 \usage{
-    nonSynonymous(synonym, diffceil)
+    nonSynonymous(synonym=FALSE, diffceil=1)
 }
 
 \arguments{
     \item{synonym}{logical input that indicates whether synonymous [TRUE]
-        or non-synonymous identifier is required.}
+        or non-synonymous [FALSE (default)] identifier is required.}
     \item{diffceil}{an interger that states the preferred maximum number
-        of nucleotide mismatch.}
+        of nucleotide mismatch. Set to 1 by default.}
 }
 
 \details{

@@ -14,3 +14,10 @@ This file documents package changes since first submission on Bioconductor.
 + Replaced "import" with "importFrom" in NAMESPACE.
 + Deleted all "::" occurrences.
 + Updated vignettes so that it includes literature review and motivation.
+
+0.99.5 (2026-04-24): Incorporated Bioconductor reviewer (@jwokaty) comments
++ Added descriptions for approaches `B` and `C` in `seqSaturation.R`.
++ Streamlined `Depends`, `Imports`, `Suggests`, `Enhances` fields.
++ Replaced `import` with `importFrom` in NAMESPACE
++ Added more function defaults. 
++ Updare tests to accommodate changes.

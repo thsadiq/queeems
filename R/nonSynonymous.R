@@ -25,7 +25,7 @@ nsynvect <- function(codon, synonym){
     return(output)
 }
 
-nonSynonymous <- function(synonym, diffceil){
+nonSynonymous <- function(synonym=FALSE, diffceil=1){
     errMsg <- "Invalid `diffceil` input. It can only be set as 0, 1, 2 or 3."
     nsynArray <- vapply(senseCodon, nsynvect,
         synonym=synonym, FUN.VALUE=vector("logical",61))

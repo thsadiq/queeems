@@ -1,6 +1,6 @@
 citHeader("To cite the queeems package in publications use:")
 
-citEntry(entry = "manual",
+bibentry(bibtype = "Manual",
         title = "queeems: Quantify the Extent of Evolutionary Evidence
                   in Molecular Sequences",
         author = personList(as.person("Hassan Sadiq")),

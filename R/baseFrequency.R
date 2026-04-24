@@ -47,7 +47,7 @@ baseScreen <- function(nleaf, freqMatrix, baseseqs){
     return(0)
 }
 
-baseFrequency <- function(fastafile, basename){
+baseFrequency <- function(fastafile, basename="dna"){
     cleanbase <- baseCheck(basename)
     baseseqs <- switch(cleanbase,
         aa = readAAStringSet(fastafile),

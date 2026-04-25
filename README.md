@@ -2,6 +2,9 @@
 Quantify the Extent of Evolutionary Evidence in Molecular Sequences
 
 ## About
+<!-- badges: start -->
+    [![Codecov test coverage](https://codecov.io/gh/thsadiq/queeems/graph/badge.svg)](https://app.codecov.io/gh/thsadiq/queeems)
+<!-- badges: end -->
 Genetic sequences are only as useful, for evolutionary inferences, as the degree of signatures they retain. When very little time has passed since evolution from the most recent common ancestor, the information accrued in the sequences will most likely be insufficient for any valuable inference to be deducible. When the time since divergence is too long, the sequences are said to have saturated. That is, the evolutionary signatures are most probably significantly eroded for such sequences to yield reliable inferences. Functions designed to assist with quantifying the extent of saturation of genetic sequences are presented. Compared to existing tools for similar purpose, the primary function herein add at least two new features to the literature. First, it is developed upon Bayesian principles. Second, it allows for site-wise assessment of saturation such that it is useful for more than just phylogeny reconstruction inquests. For example, the package is amenable to natural selection pressure analyses.
 
 ## Contents
